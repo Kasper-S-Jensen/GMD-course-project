@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
 
     [SerializeField] private Transform orientation;
+
+    public float groundDrag, playerHeight;
+    public LayerMask groundElement;
+    private bool grounded;
     private Vector3 moveDirection;
 
     private InputActions PlayerActions;
@@ -17,7 +21,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 rawInputMovement;
     private Rigidbody rb;
-
 
     // Start is called before the first frame update
     private void Awake()
@@ -39,7 +42,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundElement);
+
         MovementInput();
+        SpeedControl();
+        if (grounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+        Debug.Log(rb.velocity.magnitude);
     }
 
     // Update is called once per frame
@@ -66,13 +77,25 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * rawInputMovement.y + orientation.right * rawInputMovement.x;
-        rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * (speed * 10f), ForceMode.Force);
     }
 
     private void JumpOnPerformed(InputAction.CallbackContext obj)
     {
         Debug.Log("U jumped baby");
         rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+    }
+
+    private void SpeedControl()
+    {
+        var velocity = rb.velocity;
+        var flatVel = new Vector3(velocity.x, 0f, velocity.z);
+
+        if (flatVel.magnitude > speed)
+        {
+            var limitedVel = flatVel.normalized * speed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+        }
     }
 
 
