@@ -1,45 +1,80 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 10f;
-    private Vector3 rawInputMovement;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float jumpHeight = 5f;
+
+    private InputActions PlayerActions;
+    private InputAction PlayerAlternateFire;
+    private InputAction PlayerFire;
+    private InputAction playerJump;
+    private InputAction playerMovement;
+
+    private Vector2 rawInputMovement;
     private Rigidbody rb;
 
+
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
+        PlayerActions = new InputActions();
 
+
+        playerMovement = PlayerActions.Player.Move;
+        playerJump = PlayerActions.Player.Jump;
+        PlayerFire = PlayerActions.Player.Fire;
+        PlayerAlternateFire = PlayerActions.Player.AlternateFire;
+
+
+        //subscriptions
+        playerJump.performed += JumpOnPerformed;
+        PlayerFire.performed += PlayerFireOnPerformed;
+        PlayerAlternateFire.performed += PlayerAlternateFireOnPerformed;
+    }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        rb.AddForce(rawInputMovement*speed);
+        Movement();
     }
 
-    public void OnMove(InputValue movementValue)
+    private void OnEnable()
     {
-        var inputMovement = movementValue.Get<Vector2>();
-        rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
+        playerMovement.Enable();
+        playerJump.Enable();
+        PlayerFire.Enable();
+        PlayerAlternateFire.Enable();
     }
 
-    private void OnFire(InputValue fireValue)
+    private void OnDisable()
     {
-        Debug.Log("LEFT CLICK");
+        playerMovement.Disable();
+        playerJump.Disable();
+        PlayerAlternateFire.Disable();
     }
-    
-    private void OnAlternateFire(InputValue fireValue)
+
+    private void PlayerAlternateFireOnPerformed(InputAction.CallbackContext obj)
     {
         Debug.Log("RIGHT CLICK");
     }
-    
-    private void OnLook(InputValue lookValue)
+
+    private void PlayerFireOnPerformed(InputAction.CallbackContext obj)
     {
-        Debug.Log("We looked! "+lookValue.Get());
+        Debug.Log("LEFT CLICK");
+    } // ReSharper disable Unity.PerformanceAnalysis
+    private void Movement()
+    {
+        rawInputMovement = playerMovement.ReadValue<Vector2>();
+        Debug.Log(rawInputMovement);
+        rb.AddForce(new Vector3(rawInputMovement.x, 0f, rawInputMovement.y) * speed);
+    }
+
+    private void JumpOnPerformed(InputAction.CallbackContext obj)
+    {
+        Debug.Log("U jumped baby");
+        rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
     }
 }
