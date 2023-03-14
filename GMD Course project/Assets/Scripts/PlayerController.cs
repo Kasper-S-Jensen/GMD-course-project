@@ -3,15 +3,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 50f;
+    [Header("Movement")] [SerializeField] private float speed = 50f;
+
     [SerializeField] private float jumpHeight = 5f;
+    [SerializeField] private float jumpCooldown, airMultiplier;
 
+    [Header("Ground checking")] [SerializeField]
+    private float groundDrag, playerHeight;
+
+    [SerializeField] private LayerMask groundElement;
     [SerializeField] private Transform orientation;
-
-    public float groundDrag, playerHeight;
-    public LayerMask groundElement;
     private bool grounded;
     private Vector3 moveDirection;
+
 
     private InputActions PlayerActions;
     private InputAction PlayerAlternateFire;
@@ -21,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 rawInputMovement;
     private Rigidbody rb;
+    private bool readyToJump = true;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -45,12 +51,12 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundElement);
 
         MovementInput();
-        SpeedControl();
+        VelocityLimiter();
+
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-        Debug.Log(rb.velocity.magnitude);
     }
 
     // Update is called once per frame
@@ -77,16 +83,36 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * rawInputMovement.y + orientation.right * rawInputMovement.x;
-        rb.AddForce(moveDirection.normalized * (speed * 10f), ForceMode.Force);
+        if (grounded)
+            rb.AddForce(moveDirection.normalized * (speed * 10f), ForceMode.Force);
+        else if (!grounded) rb.AddForce(moveDirection.normalized * (speed * 10f * airMultiplier), ForceMode.Force);
     }
 
     private void JumpOnPerformed(InputAction.CallbackContext obj)
     {
-        Debug.Log("U jumped baby");
-        rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+        Debug.Log("U tried to jump baby");
+        if (playerJump.inProgress && readyToJump && grounded)
+        {
+            readyToJump = false;
+
+
+            var velocity = rb.velocity;
+            velocity = new Vector3(velocity.x, 0f, velocity.z);
+            rb.velocity = velocity;
+
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+
+            Invoke(nameof(ResetJump), jumpCooldown);
+            Debug.Log("U jumped baby");
+        }
     }
 
-    private void SpeedControl()
+    private void ResetJump()
+    {
+        readyToJump = true;
+    }
+
+    private void VelocityLimiter()
     {
         var velocity = rb.velocity;
         var flatVel = new Vector3(velocity.x, 0f, velocity.z);

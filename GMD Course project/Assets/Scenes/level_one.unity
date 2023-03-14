@@ -287,13 +287,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpHeight: 3
-  orientation: {fileID: 2021563523}
+  jumpHeight: 5
+  jumpCooldown: 0.25
+  airMultiplier: 0.4
   groundDrag: 3
   playerHeight: 2
   groundElement:
     serializedVersion: 2
     m_Bits: 64
+  orientation: {fileID: 2021563523}
 --- !u!1 &554588304
 GameObject:
   m_ObjectHideFlags: 0
