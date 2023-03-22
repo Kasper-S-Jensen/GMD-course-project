@@ -92,6 +92,7 @@ namespace StarterAssets
             _input = GetComponent<InputManager>();
             _playerInput = GetComponent<PlayerInput>();
 
+
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -111,7 +112,7 @@ namespace StarterAssets
 
         private void OnDrawGizmosSelected()
         {
-            var transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            var transparentGreen = new Color(0.9f, 0.5f, 0.7f, 0.9f);
             var transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
             if (Grounded) Gizmos.color = transparentGreen;
@@ -121,6 +122,10 @@ namespace StarterAssets
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
                 GroundedRadius);
+        }
+
+        private void didifire()
+        {
         }
 
         private void GroundedCheck()
@@ -135,13 +140,13 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input
-            if (_input.look.sqrMagnitude >= _threshold)
+            if (_input.lookInput.sqrMagnitude >= _threshold)
             {
                 //Don't multiply mouse input by Time.deltaTime
                 var deltaTimeMultiplier = isCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier * 10f;
-                _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier * 10f;
+                _cinemachineTargetPitch += _input.lookInput.y * RotationSpeed * deltaTimeMultiplier * 10f;
+                _rotationVelocity = _input.lookInput.x * RotationSpeed * deltaTimeMultiplier * 10f;
 
                 // clamp our pitch rotation
                 _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
@@ -157,19 +162,22 @@ namespace StarterAssets
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            var targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
+            var targetSpeed = _input.isSprinting switch
+            {
+                true => SprintSpeed,
+                false => MoveSpeed
+            };
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.moveInput == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             var currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             var speedOffset = 0.1f;
-            var inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            //  var inputMagnitude = _input.analogMovement ? _input.moveInput.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -177,7 +185,7 @@ namespace StarterAssets
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed,
                     Time.deltaTime * SpeedChangeRate);
 
                 // round speed to 3 decimal places
@@ -189,13 +197,13 @@ namespace StarterAssets
             }
 
             // normalise input direction
-            var inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            var inputDirection = new Vector3(_input.moveInput.x, 0.0f, _input.moveInput.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (_input.move != Vector2.zero)
+            if (_input.moveInput != Vector2.zero)
                 // move
-                inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+                inputDirection = transform.right * _input.moveInput.x + transform.forward * _input.moveInput.y;
 
 
             switch (Grounded)
@@ -224,7 +232,7 @@ namespace StarterAssets
                 if (_verticalVelocity < 0.0f) _verticalVelocity = -2f;
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_input.isJumping && _jumpTimeoutDelta <= 0.0f)
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
@@ -240,7 +248,7 @@ namespace StarterAssets
                 if (_fallTimeoutDelta >= 0.0f) _fallTimeoutDelta -= Time.deltaTime;
 
                 // if we are not grounded, do not jump
-                _input.jump = false;
+                _input.isJumping = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)

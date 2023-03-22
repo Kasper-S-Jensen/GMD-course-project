@@ -3,63 +3,89 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [Header("Character Input Values")] public Vector2 move;
+    [Header("Mouse Cursor Settings")] private readonly bool cursorLocked = true;
 
-    public Vector2 look;
-    public bool jump;
-    public bool sprint;
+    // Input actions
+    private InputActions playerControls;
 
-    [Header("Movement Settings")] public bool analogMovement;
+    // Movement
+    public Vector2 moveInput { get; set; }
 
-    [Header("Mouse Cursor Settings")] public bool cursorLocked = true;
+    // Loking
+    public Vector2 lookInput { get; set; }
 
-    public bool cursorInputForLook = true;
+    // Firing
+    public bool isFiring { get; set; }
+
+    // Reload
+    public bool isReloading { get; set; }
+
+    // Jumping
+    public bool isJumping { get; set; }
+
+    // Sprinting
+    public bool isSprinting { get; set; }
+
+    private void Awake()
+    {
+        playerControls = new InputActions();
+
+        // Movement
+        playerControls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        playerControls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+
+        // Looking
+        playerControls.Player.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
+        playerControls.Player.Look.canceled += ctx => lookInput = Vector2.zero;
+
+        // Firing
+        playerControls.Player.Fire.performed += ctx => isFiring = true;
+        playerControls.Player.Fire.canceled += ctx => isFiring = false;
+
+        // Relaoding
+        playerControls.Player.Reload.performed += ctx => isReloading = true;
+        playerControls.Player.Reload.canceled += ctx => isReloading = false;
+
+        // Jumping
+        playerControls.Player.Jump.performed += ctx => isJumping = true;
+        playerControls.Player.Jump.canceled += ctx => isJumping = false;
+
+        // Sprinting
+        playerControls.Player.Sprint.performed += SprintOnperformed;
+        playerControls.Player.Sprint.canceled += SprintOncanceled;
+    }
+
+    private void Update()
+    {
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Disable();
+    }
 
     private void OnApplicationFocus(bool hasFocus)
     {
         SetCursorState(cursorLocked);
     }
 
-    public void OnMove(InputValue value)
+    private void SprintOncanceled(InputAction.CallbackContext obj)
     {
-        MoveInput(value.Get<Vector2>());
+        isSprinting = false;
+        Debug.Log("SPRINT CANCELLED");
     }
 
-    public void OnLook(InputValue value)
+    private void SprintOnperformed(InputAction.CallbackContext obj)
     {
-        if (cursorInputForLook) LookInput(value.Get<Vector2>());
+        isSprinting = true;
+        Debug.Log("SPRINT STARTED");
     }
 
-    public void OnJump(InputValue value)
-    {
-        JumpInput(value.isPressed);
-    }
-
-    public void OnSprint(InputValue value)
-    {
-        SprintInput(value.isPressed);
-    }
-
-
-    public void MoveInput(Vector2 newMoveDirection)
-    {
-        move = newMoveDirection;
-    }
-
-    public void LookInput(Vector2 newLookDirection)
-    {
-        look = newLookDirection;
-    }
-
-    public void JumpInput(bool newJumpState)
-    {
-        jump = newJumpState;
-    }
-
-    public void SprintInput(bool newSprintState)
-    {
-        sprint = newSprintState;
-    }
 
     private void SetCursorState(bool newState)
     {
