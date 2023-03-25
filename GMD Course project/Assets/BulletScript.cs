@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +21,7 @@ public class BulletScript : MonoBehaviour
 
     private void OnDestroy()
     {
+        //explosion
     }
 
     // Update is called once per frame
@@ -33,33 +33,9 @@ public class BulletScript : MonoBehaviour
 
             if (navMeshAgent != null)
             {
-                var direction = collision.transform.position - transform.position;
-                direction.Normalize();
-
-                StartCoroutine(Knockback(navMeshAgent, direction));
             }
 
-            // Destroy(gameObject);
+            Destroy(gameObject);
         }
-    }
-
-    private IEnumerator Knockback(NavMeshAgent navMeshAgent, Vector3 direction)
-    {
-        navMeshAgent.isStopped = true;
-
-        var elapsedTime = 0f;
-
-        while (elapsedTime < knockbackDuration)
-        {
-            var t = elapsedTime / knockbackDuration;
-            var distance = Mathf.Lerp(0f, knockbackDistance, t);
-
-            navMeshAgent.Move(direction * (distance * 0.1f));
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        navMeshAgent.isStopped = false;
     }
 }
