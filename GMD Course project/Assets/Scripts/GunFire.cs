@@ -112,13 +112,13 @@ public class GunFire : MonoBehaviour
         //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
         if (allowInvoke)
         {
-            Invoke("ResetShot", timeBetweenShooting);
+            Invoke(nameof(ResetShot), timeBetweenShooting);
             allowInvoke = false;
         }
 
         //if more than one bulletsPerTap make sure to repeat shoot function
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
-            Invoke("Shoot", timeBetweenShots);
+            Invoke(nameof(Shoot), timeBetweenShots);
     }
 
 
@@ -132,7 +132,7 @@ public class GunFire : MonoBehaviour
     private void Reload()
     {
         reloading = true;
-        Invoke("ReloadFinished", reloadTime); //Invoke ReloadFinished function with your reloadTime as delay
+        Invoke(nameof(ReloadFinished), reloadTime); //Invoke ReloadFinished function with your reloadTime as delay
     }
 
     private void ReloadFinished()
