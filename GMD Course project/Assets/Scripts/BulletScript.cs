@@ -5,8 +5,7 @@ public class BulletScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float knockbackDistance = 2f;
-    public float knockbackDuration = 0.5f;
+
     private Rigidbody rb;
 
     private void Awake()
@@ -35,7 +34,7 @@ public class BulletScript : MonoBehaviour
             {
             }
 
-           // Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
