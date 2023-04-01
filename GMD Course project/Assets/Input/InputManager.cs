@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     // Movement
     public Vector2 moveInput { get; set; }
 
-    // Loking
+    // Looking
     public Vector2 lookInput { get; set; }
 
     // Firing
@@ -54,6 +54,7 @@ public class InputManager : MonoBehaviour
         playerControls.Player.Sprint.performed += SprintOnperformed;
         playerControls.Player.Sprint.canceled += SprintOncanceled;
     }
+
 
     private void Update()
     {
