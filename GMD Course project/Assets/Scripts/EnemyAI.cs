@@ -8,10 +8,9 @@ public class EnemyAI : MonoBehaviour
     private static readonly int IsIdle = Animator.StringToHash("isIdle");
 
     private static readonly int Speed = Animator.StringToHash("Speed");
-
-    // public Transform[] waypoints;
-    public Transform _player;
     public LayerMask whatIsGround, whatIsPlayer;
+
+    public GameObject explosion;
 
     //patrolling
     public Vector3 walkPoint;
@@ -25,13 +24,19 @@ public class EnemyAI : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
-
-    public Transform _theGate;
     private NavMeshAgent _agent;
 
 
     private Animator _animator;
+
+    // public Transform[] waypoints;
+    private Transform _player;
+
+    private Transform _theGate;
+
+    private WaveSpawner _waveSpawner;
     private bool alreadyAttacked;
+    private Transform bulletContainer;
     private bool walkPointSet;
 
     private int waypointIndex;
@@ -40,8 +45,11 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player").transform;
+        _theGate = GameObject.FindWithTag("TheGate").transform;
+        bulletContainer = GameObject.FindWithTag("BulletContainer").transform;
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
     // Start is called before the first frame update
@@ -59,6 +67,11 @@ public class EnemyAI : MonoBehaviour
         CheckState();
     }
 
+    private void OnDestroy()
+    {
+    }
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -74,15 +87,32 @@ public class EnemyAI : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) StormTheGate();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            StormTheGate();
+        }
+
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+        }
+
+        if (playerInAttackRange && playerInSightRange)
+        {
+            AttackPlayer();
+        }
     }
 
 
     private void StormTheGate()
     {
         _agent.SetDestination(_theGate.position);
+        if (Vector3.Distance(_agent.transform.position, _theGate.transform.position) < 1)
+        {
+            DestroyEnemy();
+        }
+
+
         //  IterateWaypointIndex();
     }
 
@@ -118,7 +148,8 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             //Attack code here
-            var rb = Instantiate(projectile, barrelEnd.position, Quaternion.identity).GetComponent<Rigidbody>();
+            var rb = Instantiate(projectile, barrelEnd.position, Quaternion.identity, bulletContainer.transform)
+                .GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 16f, ForceMode.Impulse);
             rb.AddForce(transform.up * 4f, ForceMode.Impulse);
 
@@ -146,6 +177,13 @@ public class EnemyAI : MonoBehaviour
 
     private void DestroyEnemy()
     {
+        _waveSpawner.waves[_waveSpawner.currentWaveIndex].enemiesLeft--;
+        var o = gameObject.transform;
+        var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
+
+        var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
+        Destroy(explosionObj, 2f);
+
         Destroy(gameObject);
     }
 }

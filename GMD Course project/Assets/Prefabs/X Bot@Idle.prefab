@@ -1050,13 +1050,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b2a91f24dae2a47844cb03589f8e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
+  explosion: {fileID: 1335506079386504625, guid: e4c1e573542fc2446a5926b46d629850,
+    type: 3}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 1
   timeBetweenAttacks: 0.2
@@ -1067,7 +1068,6 @@ MonoBehaviour:
   attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
-  _theGate: {fileID: 0}
 --- !u!195 &2854341398586873192
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1078,7 +1078,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
+  m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

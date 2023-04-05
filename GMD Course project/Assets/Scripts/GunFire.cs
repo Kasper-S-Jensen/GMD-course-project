@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
+    public GameObject container;
+
     //bullet 
     public GameObject bullet;
 
@@ -93,7 +95,8 @@ public class GunFire : MonoBehaviour
 
         //Instantiate bullet/projectile
         var currentBullet =
-            Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
+            Instantiate(bullet, attackPoint.position, Quaternion.identity,
+                container.transform); //store instantiated bullet in currentBullet
         //Rotate bullet to shoot direction
         currentBullet.transform.forward = directionWithSpread.normalized;
 

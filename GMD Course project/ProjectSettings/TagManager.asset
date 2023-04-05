@@ -7,6 +7,8 @@ TagManager:
   - CinemachineTarget
   - Enemy
   - PlayerNeck
+  - TheGate
+  - BulletContainer
   layers:
   - Default
   - TransparentFX
