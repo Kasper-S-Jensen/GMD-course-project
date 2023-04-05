@@ -3,7 +3,17 @@ guid: 14ba62f16f936cc489a7ff159bb0a1ca
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkRock
+    second: {fileID: 2100000, guid: 54c67a93973a34d4ba9303e0e691d606, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightRock
+    second: {fileID: 2100000, guid: 4de5ecefac282734b9654c3f0d42ceba, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -35,7 +45,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 5.09
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -88,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 5.09
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
