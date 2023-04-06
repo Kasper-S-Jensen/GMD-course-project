@@ -1050,6 +1050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b2a91f24dae2a47844cb03589f8e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnemyDeath: {fileID: 11400000, guid: c16ca8e742f71344ea6d5efeab9e030c, type: 2}
+  ExperienceOnDeath: 100
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64

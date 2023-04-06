@@ -6,8 +6,9 @@ public class EnemyAI : MonoBehaviour
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
     private static readonly int IsWalking = Animator.StringToHash("isWalking");
     private static readonly int IsIdle = Animator.StringToHash("isIdle");
-
     private static readonly int Speed = Animator.StringToHash("Speed");
+    public GameEvent OnEnemyDeath;
+    public int ExperienceOnDeath = 100;
     public LayerMask whatIsGround, whatIsPlayer;
 
     public GameObject explosion;
@@ -55,6 +56,13 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        /*
+        if (OnEnemyDeath == null)
+        {
+            OnEnemyDeath = new UnityEventInt();
+        }
+        */
+
         CheckState();
     }
 
@@ -67,10 +75,6 @@ public class EnemyAI : MonoBehaviour
         CheckState();
     }
 
-    private void OnDestroy()
-    {
-    }
-
 
     private void OnDrawGizmosSelected()
     {
@@ -80,6 +84,8 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(position, sightRange);
     }
+
+    //   public event EventHandler OnEnemyDeath;
 
     private void CheckState()
     {
@@ -184,6 +190,15 @@ public class EnemyAI : MonoBehaviour
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
 
+        OnEnemyDeath.Raise(ExperienceOnDeath);
+        //OnEnemyDeath?.Invoke(this, new OnEnemyDeathEventArgs {ExperienceOnDeath = ExperienceOnDeath});
+
+
         Destroy(gameObject);
     }
+
+    /*public class OnEnemyDeathEventArgs : EventArgs
+    {
+        public float ExperienceOnDeath;
+    }*/
 }
