@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423656789}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.28, z: 0.405}
+  m_LocalPosition: {x: 0, y: 1.28, z: 0.432}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -978,6 +978,7 @@ GameObject:
   - component: {fileID: 2854341398586873189}
   - component: {fileID: 2854341398586873191}
   - component: {fileID: 2854341398586873192}
+  - component: {fileID: 4745728500307110944}
   m_Layer: 0
   m_Name: X Bot@Idle
   m_TagString: Enemy
@@ -1014,7 +1015,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.27
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -1079,7 +1080,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3124866682291687956}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.38
   m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1092,6 +1093,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4745728500307110944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3124866682291687956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b05761db094c8192939bc7da29f0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maximumHealth: 2
 --- !u!1 &3484893901057679310
 GameObject:
   m_ObjectHideFlags: 0

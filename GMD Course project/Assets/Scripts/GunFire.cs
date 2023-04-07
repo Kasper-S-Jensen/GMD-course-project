@@ -103,6 +103,7 @@ public class GunFire : MonoBehaviour
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>()
             .AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+        Physics.IgnoreCollision(currentBullet.GetComponent<Collider>(), GetComponent<Collider>());
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
 
         //Instantiate muzzle flash, if you have one

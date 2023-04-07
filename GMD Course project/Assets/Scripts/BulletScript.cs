@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class BulletScript : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    public float projectileDamage=1;
 
     private Rigidbody rb;
 
     private void Awake()
     {
+        
         rb = GetComponent<Rigidbody>();
     }
 
@@ -26,15 +28,10 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     private void OnCollisionEnter(Collision collision)
     {
-        if (GameObject.FindGameObjectWithTag("Enemy"))
+        if (collision.gameObject.TryGetComponent<Health>(out var health))
         {
-            var navMeshAgent = collision.gameObject.GetComponent<NavMeshAgent>();
-
-            if (navMeshAgent != null)
-            {
-            }
-
-            //  Destroy(gameObject);
+           health.TakeDamage(projectileDamage);
         }
+      //  Destroy(gameObject);
     }
 }

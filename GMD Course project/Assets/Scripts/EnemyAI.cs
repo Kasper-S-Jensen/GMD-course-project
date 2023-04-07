@@ -154,10 +154,11 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             //Attack code here
-            var rb = Instantiate(projectile, barrelEnd.position, Quaternion.identity, bulletContainer.transform)
-                .GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 16f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 4f, ForceMode.Impulse);
+            var currentProjectile = Instantiate(projectile, barrelEnd.position, Quaternion.identity,
+                bulletContainer.transform);
+            Physics.IgnoreCollision(currentProjectile.GetComponent<Collider>(), GetComponent<Collider>());
+            currentProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * 16f, ForceMode.Impulse);
+            currentProjectile.GetComponent<Rigidbody>().AddForce(transform.up * 4f, ForceMode.Impulse);
 
             //End of attack code
 
