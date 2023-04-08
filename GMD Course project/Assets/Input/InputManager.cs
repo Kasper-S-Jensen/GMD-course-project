@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -51,8 +50,8 @@ public class InputManager : MonoBehaviour
         playerControls.Player.Jump.canceled += ctx => isJumping = false;
 
         // Sprinting
-        playerControls.Player.Sprint.performed += SprintOnperformed;
-        playerControls.Player.Sprint.canceled += SprintOncanceled;
+        playerControls.Player.Sprint.performed += context => isSprinting = true;
+        playerControls.Player.Sprint.canceled += context => isSprinting = false;
     }
 
 
@@ -74,19 +73,6 @@ public class InputManager : MonoBehaviour
     {
         SetCursorState(cursorLocked);
     }
-
-    private void SprintOncanceled(InputAction.CallbackContext obj)
-    {
-        isSprinting = false;
-        Debug.Log("SPRINT CANCELLED");
-    }
-
-    private void SprintOnperformed(InputAction.CallbackContext obj)
-    {
-        isSprinting = true;
-        Debug.Log("SPRINT STARTED");
-    }
-
 
     private void SetCursorState(bool newState)
     {

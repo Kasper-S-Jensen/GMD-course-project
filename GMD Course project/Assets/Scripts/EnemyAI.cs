@@ -1,3 +1,4 @@
+using StarterAssets.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,10 +18,6 @@ public class EnemyAI : MonoBehaviour
     public Vector3 walkPoint;
     public float walkPointRange;
 
-    //Attacking
-    public float timeBetweenAttacks;
-    public GameObject projectile;
-    public Transform barrelEnd;
 
     //States
     public float sightRange, attackRange;
@@ -29,6 +26,7 @@ public class EnemyAI : MonoBehaviour
 
 
     private Animator _animator;
+    private IEnemyAttackPlayer _enemyAttackPlayer;
 
     // public Transform[] waypoints;
     private Transform _player;
@@ -36,8 +34,7 @@ public class EnemyAI : MonoBehaviour
     private Transform _theGate;
 
     private WaveSpawner _waveSpawner;
-    private bool alreadyAttacked;
-    private Transform bulletContainer;
+
     private bool walkPointSet;
 
     private int waypointIndex;
@@ -45,9 +42,9 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        _enemyAttackPlayer = GetComponent<IEnemyAttackPlayer>();
         _player = GameObject.FindWithTag("Player").transform;
         _theGate = GameObject.FindWithTag("TheGate").transform;
-        bulletContainer = GameObject.FindWithTag("BulletContainer").transform;
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _waveSpawner = GetComponentInParent<WaveSpawner>();
@@ -151,34 +148,13 @@ public class EnemyAI : MonoBehaviour
             new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z);
         transform.LookAt(lookAtTarget);
 
-        if (!alreadyAttacked)
-        {
-            //Attack code here
-            var currentProjectile = Instantiate(projectile, barrelEnd.position, Quaternion.identity,
-                bulletContainer.transform);
-            Physics.IgnoreCollision(currentProjectile.GetComponent<Collider>(), GetComponent<Collider>());
-            currentProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * 16f, ForceMode.Impulse);
-            currentProjectile.GetComponent<Rigidbody>().AddForce(transform.up * 4f, ForceMode.Impulse);
-
-            //End of attack code
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-
-        // IterateWaypointIndex();
+        _enemyAttackPlayer.AttackPlayer();
     }
 
 
     private void Animate()
     {
         _animator.SetFloat(Speed, _agent.velocity.magnitude);
-    }
-
-
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
     }
 
 
@@ -194,12 +170,6 @@ public class EnemyAI : MonoBehaviour
         OnEnemyDeath.Raise(ExperienceOnDeath);
         //OnEnemyDeath?.Invoke(this, new OnEnemyDeathEventArgs {ExperienceOnDeath = ExperienceOnDeath});
 
-
         Destroy(gameObject);
     }
-
-    /*public class OnEnemyDeathEventArgs : EventArgs
-    {
-        public float ExperienceOnDeath;
-    }*/
 }
