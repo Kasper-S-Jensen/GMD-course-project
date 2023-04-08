@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
     // Start is called before the first frame update
     public float projectileDamage = 1;
-
+    private int projectileLayer = 8;
     private Rigidbody rb;
 
     private void Awake()
@@ -25,7 +25,12 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Health>(out var health))
+        if (collision.gameObject.layer == 8)
+        {
+            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+        }
+
+        if (collision.gameObject.TryGetComponent<Health>(out var health) && collision.gameObject.CompareTag("Player"))
         {
             health.TakeDamage(projectileDamage);
         }

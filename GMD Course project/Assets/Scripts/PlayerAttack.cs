@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GunFire : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
     public GameObject container;
 

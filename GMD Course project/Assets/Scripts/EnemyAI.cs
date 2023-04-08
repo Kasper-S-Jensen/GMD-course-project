@@ -10,44 +10,35 @@ public class EnemyAI : MonoBehaviour
     private static readonly int Speed = Animator.StringToHash("Speed");
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
-    public LayerMask whatIsGround, whatIsPlayer;
-
+    public LayerMask whatIsGround, whatIsPlayer, whatIsGate;
     public GameObject explosion;
-
-    //patrolling
-    public Vector3 walkPoint;
-    public float walkPointRange;
-
 
     //States
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
     private NavMeshAgent _agent;
 
 
     private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
+    private IEnemyAttackTheGate _enemyAttackTheGate;
 
     // public Transform[] waypoints;
     private Transform _player;
-
     private Transform _theGate;
 
-    private WaveSpawner _waveSpawner;
-
-    private bool walkPointSet;
-
-    private int waypointIndex;
+    //  private WaveSpawner _waveSpawner;
 
 
     private void Awake()
     {
         _enemyAttackPlayer = GetComponent<IEnemyAttackPlayer>();
+        _enemyAttackTheGate = GetComponent<IEnemyAttackTheGate>();
         _player = GameObject.FindWithTag("Player").transform;
         _theGate = GameObject.FindWithTag("TheGate").transform;
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _waveSpawner = GetComponentInParent<WaveSpawner>();
+        // _waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
     // Start is called before the first frame update
@@ -72,6 +63,11 @@ public class EnemyAI : MonoBehaviour
         CheckState();
     }
 
+    private void OnDestroy()
+    {
+        OnEnemyDeath.Raise(ExperienceOnDeath);
+    }
+
 
     private void OnDrawGizmosSelected()
     {
@@ -90,9 +86,17 @@ public class EnemyAI : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
 
+        gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
+        gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
+
         if (!playerInSightRange && !playerInAttackRange)
         {
             StormTheGate();
+        }
+
+        if (gateInSightRange && gateInAttackRange)
+        {
+            AttackGate();
         }
 
         if (playerInSightRange && !playerInAttackRange)
@@ -104,6 +108,11 @@ public class EnemyAI : MonoBehaviour
         {
             AttackPlayer();
         }
+    }
+
+    private void AttackGate()
+    {
+        _enemyAttackTheGate.AttackGate(_agent);
     }
 
 
@@ -160,14 +169,13 @@ public class EnemyAI : MonoBehaviour
 
     private void DestroyEnemy()
     {
-        _waveSpawner.waves[_waveSpawner.currentWaveIndex].enemiesLeft--;
         var o = gameObject.transform;
         var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
 
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
 
-        OnEnemyDeath.Raise(ExperienceOnDeath);
+
         //OnEnemyDeath?.Invoke(this, new OnEnemyDeathEventArgs {ExperienceOnDeath = ExperienceOnDeath});
 
         Destroy(gameObject);
