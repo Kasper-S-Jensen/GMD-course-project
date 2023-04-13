@@ -4,7 +4,10 @@ public class EnemyProjectile : MonoBehaviour
 {
     // Start is called before the first frame update
     public float projectileDamage = 1;
-    private int projectileLayer = 8;
+
+    public GameEvent OnGateDamage;
+
+    //  private int projectileLayer = 8;
     private Rigidbody rb;
 
     private void Awake()
@@ -30,10 +33,20 @@ public class EnemyProjectile : MonoBehaviour
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
 
-        if (collision.gameObject.TryGetComponent<Health>(out var health) && collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.TryGetComponent<Health>(out var health))
         {
-            health.TakeDamage(projectileDamage);
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("TheGate"))
+            {
+                health.TakeDamage(projectileDamage);
+            }
+
+            if (collision.gameObject.layer == 7)
+            {
+                health.TakeDamage(projectileDamage);
+                OnGateDamage.Raise(projectileDamage);
+            }
         }
+
 
         Destroy(gameObject);
     }

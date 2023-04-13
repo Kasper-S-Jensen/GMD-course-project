@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7746114696344899746}
   - component: {fileID: 1524366715096367747}
   m_Layer: 8
-  m_Name: Bullet
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,3 +128,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: 1
+  OnGateDamage: {fileID: 11400000, guid: eae998a8cd03f5345ba327882c143677, type: 2}

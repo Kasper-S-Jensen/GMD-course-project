@@ -52,8 +52,13 @@ public class WaveSpawner : MonoBehaviour
 
     public void DecreaseEnemiesInWave()
     {
+        if (waves[currentWaveIndex].enemiesLeft <= 0)
+        {
+            return;
+        }
+
         waves[currentWaveIndex].enemiesLeft--;
-        Debug.Log("Enimes decrease!");
+        Debug.Log("Enemies decrease!");
     }
 
     private IEnumerator SpawnWave()

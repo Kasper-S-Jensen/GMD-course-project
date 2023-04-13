@@ -4,13 +4,10 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private static readonly int IsRunning = Animator.StringToHash("isRunning");
-    private static readonly int IsWalking = Animator.StringToHash("isWalking");
-    private static readonly int IsIdle = Animator.StringToHash("isIdle");
     private static readonly int Speed = Animator.StringToHash("Speed");
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
-    public LayerMask whatIsGround, whatIsPlayer, whatIsGate;
+    public LayerMask whatIsPlayer, whatIsGate;
     public GameObject explosion;
 
     //States
@@ -23,12 +20,8 @@ public class EnemyAI : MonoBehaviour
     private IEnemyAttackPlayer _enemyAttackPlayer;
     private IEnemyAttackTheGate _enemyAttackTheGate;
 
-    // public Transform[] waypoints;
     private Transform _player;
     private Transform _theGate;
-
-    //  private WaveSpawner _waveSpawner;
-
 
     private void Awake()
     {
@@ -38,19 +31,11 @@ public class EnemyAI : MonoBehaviour
         _theGate = GameObject.FindWithTag("TheGate").transform;
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        // _waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        /*
-        if (OnEnemyDeath == null)
-        {
-            OnEnemyDeath = new UnityEventInt();
-        }
-        */
-
         CheckState();
     }
 
@@ -58,8 +43,7 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         Animate();
-        //  UpdateDestination();
-        //Check for sight and attack range
+
         CheckState();
     }
 
@@ -89,14 +73,15 @@ public class EnemyAI : MonoBehaviour
         gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
         gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
 
+        if (gateInSightRange && gateInAttackRange && !playerInSightRange && !playerInAttackRange)
+        {
+            Debug.Log("ATTACKING GATE");
+            AttackGate();
+        }
+
         if (!playerInSightRange && !playerInAttackRange)
         {
             StormTheGate();
-        }
-
-        if (gateInSightRange && gateInAttackRange)
-        {
-            AttackGate();
         }
 
         if (playerInSightRange && !playerInAttackRange)
@@ -112,33 +97,28 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackGate()
     {
-        _enemyAttackTheGate.AttackGate(_agent);
+        //Make sure enemy doesn't move
+        _agent.SetDestination(transform.position);
+
+        var lookAtTarget =
+            new Vector3(_theGate.transform.position.x, transform.position.y, _theGate.transform.position.z);
+        transform.LookAt(lookAtTarget);
+
+        //  _enemyAttackTheGate.AttackGate(_agent);
+        _enemyAttackPlayer.AttackPlayer();
     }
 
 
     private void StormTheGate()
     {
         _agent.SetDestination(_theGate.position);
-        if (Vector3.Distance(_agent.transform.position, _theGate.transform.position) < 1)
+        /*if (Vector3.Distance(_agent.transform.position, _theGate.transform.position) < 1)
         {
             DestroyEnemy();
-        }
+        }*/
 
 
         //  IterateWaypointIndex();
-    }
-
-    private void UpdateDestination()
-    {
-        //  target = waypoints[waypointIndex].position;
-        _agent.SetDestination(_theGate.position);
-    }
-
-    private void IterateWaypointIndex()
-    {
-        // if (transform.position.z.Equals(_theGate)) waypointIndex++;
-
-        // if (waypointIndex == waypoints.Length) waypointIndex = 0;
     }
 
 

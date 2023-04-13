@@ -1,28 +1,35 @@
-﻿using System;
-using UnityEngine;  
+﻿using UnityEngine;
 
-    public class Health : MonoBehaviour
+public class Health : MonoBehaviour
+{
+    public float currentHealth;
+    public float maximumHealth = 2;
+    public GameEvent OnGateDestroyed;
+
+    private void Start()
     {
-        public float currentHealth;
-        public float maximumHealth=2;
+        currentHealth = maximumHealth;
+    }
 
-
-        private void Start()
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth -= damageAmount;
+        if (currentHealth <= 0)
         {
-            currentHealth = maximumHealth;
-        }
-
-        public void TakeDamage(float damageAmount)
-        {
-            currentHealth -= damageAmount;
-            if (currentHealth<=0)
-            {
-                Die();
-            }
-        }
-
-        private void Die()
-        {
-          Destroy(gameObject);
+            currentHealth = 0;
+            Die();
         }
     }
+
+    private void Die()
+    {
+        if (gameObject.CompareTag("TheGate"))
+        {
+            Debug.Log("GAME OVER");
+            OnGateDestroyed.Raise();
+            return;
+        }
+
+        Destroy(gameObject);
+    }
+}

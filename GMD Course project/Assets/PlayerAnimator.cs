@@ -17,6 +17,6 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Animate()
     {
-        // _animator.SetFloat("Speed", gameObject..velocity.magnitude);
+        //     _animator.SetFloat("Speed", gameObject..velocity.magnitude);
     }
 }

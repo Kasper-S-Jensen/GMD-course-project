@@ -1061,14 +1061,17 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
+  whatIsGate:
+    serializedVersion: 2
+    m_Bits: 128
   explosion: {fileID: 1335506079386504625, guid: e4c1e573542fc2446a5926b46d629850,
     type: 3}
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 1
   sightRange: 20
   attackRange: 5
   playerInSightRange: 0
   playerInAttackRange: 0
+  gateInSightRange: 0
+  gateInAttackRange: 0
 --- !u!195 &2854341398586873192
 NavMeshAgent:
   m_ObjectHideFlags: 0
