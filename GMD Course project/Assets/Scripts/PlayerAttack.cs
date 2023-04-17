@@ -19,6 +19,9 @@ public class PlayerAttack : MonoBehaviour
 
     //bug fixing :D
     public bool allowInvoke = true;
+
+    //events
+    public GameEvent OnPlayerAttack;
     private InputManager _input;
 
     //bools
@@ -75,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
             .AddForce(direction.normalized * shootForce, ForceMode.Impulse);
         Physics.IgnoreCollision(currentBullet.GetComponent<Collider>(), GetComponent<Collider>());
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
+        OnPlayerAttack.Raise();
 
         //Instantiate muzzle flash, if you have one
         //  if (muzzleFlash != null)

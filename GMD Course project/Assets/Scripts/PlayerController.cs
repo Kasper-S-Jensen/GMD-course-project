@@ -58,6 +58,9 @@ namespace StarterAssets
         [Tooltip("How far in degrees can you move the camera down")]
         public float BottomClamp = -90.0f;
 
+        //events
+        public GameEvent OnPlayerJump;
+
         private readonly float _terminalVelocity = 53.0f;
         private Animator _animator;
 
@@ -86,7 +89,10 @@ namespace StarterAssets
         {
             _animator = GetComponent<Animator>();
             // get a reference to our main camera
-            if (_mainCamera == null) _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if (_mainCamera == null)
+            {
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
         }
 
         private void Start()
@@ -119,8 +125,14 @@ namespace StarterAssets
             var transparentGreen = new Color(0.9f, 0.5f, 0.7f, 0.9f);
             var transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-            if (Grounded) Gizmos.color = transparentGreen;
-            else Gizmos.color = transparentRed;
+            if (Grounded)
+            {
+                Gizmos.color = transparentGreen;
+            }
+            else
+            {
+                Gizmos.color = transparentRed;
+            }
 
             // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(
@@ -180,7 +192,10 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.moveInput == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.moveInput == Vector2.zero)
+            {
+                targetSpeed = 0.0f;
+            }
 
             // a reference to the players current horizontal velocity
             var currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -212,7 +227,9 @@ namespace StarterAssets
             // if there is a move input rotate player when the player is moving
             if (_input.moveInput != Vector2.zero)
                 // move
+            {
                 inputDirection = transform.right * _input.moveInput.x + transform.forward * _input.moveInput.y;
+            }
 
 
             switch (Grounded)
@@ -238,15 +255,24 @@ namespace StarterAssets
                 _fallTimeoutDelta = FallTimeout;
 
                 // stop our velocity dropping infinitely when grounded
-                if (_verticalVelocity < 0.0f) _verticalVelocity = -2f;
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
 
                 // Jump
                 if (_input.isJumping && _jumpTimeoutDelta <= 0.0f)
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
+                {
+                    OnPlayerJump.Raise();
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                }
 
                 // jump timeout
-                if (_jumpTimeoutDelta >= 0.0f) _jumpTimeoutDelta -= Time.deltaTime;
+                if (_jumpTimeoutDelta >= 0.0f)
+                {
+                    _jumpTimeoutDelta -= Time.deltaTime;
+                }
             }
             else
             {
@@ -254,20 +280,34 @@ namespace StarterAssets
                 _jumpTimeoutDelta = JumpTimeout;
 
                 // fall timeout
-                if (_fallTimeoutDelta >= 0.0f) _fallTimeoutDelta -= Time.deltaTime;
+                if (_fallTimeoutDelta >= 0.0f)
+                {
+                    _fallTimeoutDelta -= Time.deltaTime;
+                }
 
                 // if we are not grounded, do not jump
                 _input.isJumping = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity) _verticalVelocity += Gravity * Time.deltaTime;
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
-            if (lfAngle < -360f) lfAngle += 360f;
-            if (lfAngle > 360f) lfAngle -= 360f;
+            if (lfAngle < -360f)
+            {
+                lfAngle += 360f;
+            }
+
+            if (lfAngle > 360f)
+            {
+                lfAngle -= 360f;
+            }
+
             return Mathf.Clamp(lfAngle, lfMin, lfMax);
         }
     }
