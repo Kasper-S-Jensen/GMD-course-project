@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: e0f1ab560cf587f429897700d04596ed
+guid: 5578becd93c3ffd47a7ecfa7557ece57
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye_Black
+    second: {fileID: 2100000, guid: 655ab9854b1456248b2102ea795c4ee4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye_White
+    second: {fileID: 2100000, guid: 1c321bc30ddb22943b2ba476485b17f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Frog_Main
+    second: {fileID: 2100000, guid: bb7f3d270e295da40a2e4e8648a07976, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Frog_Secondary
+    second: {fileID: 2100000, guid: cd103d0c2cbbaf9489674b0464e94f91, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,12 +1,12 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gateHealth;
-    public GameObject gameOverMenu;
+    public GameEvent OnGameRestart;
+
     private float _gateHealth = 10;
     private float _gateMaxHealth;
 
@@ -26,11 +26,6 @@ public class UIController : MonoBehaviour
     {
     }
 
-    public void EnableGameOverMenu(Component sender, object data)
-    {
-        gameOverMenu.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-    }
 
     public void UpdateGateHealth(Component sender, object data)
     {
@@ -61,9 +56,8 @@ public class UIController : MonoBehaviour
         scoreText.SetText("Score: " + _score);
     }
 
-    public void RestartGame()
+    public void ClickRestartButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Cursor.lockState = CursorLockMode.Locked;
+        OnGameRestart.Raise();
     }
 }

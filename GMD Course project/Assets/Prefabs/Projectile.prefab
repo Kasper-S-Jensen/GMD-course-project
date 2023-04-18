@@ -128,4 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: 1
+  whatIsGate:
+    serializedVersion: 2
+    m_Bits: 128
   OnGateDamage: {fileID: 11400000, guid: eae998a8cd03f5345ba327882c143677, type: 2}

@@ -5,7 +5,7 @@ namespace StarterAssets
 {
     public class PlayerController : MonoBehaviour
     {
-        private const float _threshold = 0.01f;
+        private const float Threshold = 0.05f;
         private static readonly int Speed = Animator.StringToHash("Speed");
 
         [Header("Player")] [Tooltip("Move speed of the character in m/s")]
@@ -145,9 +145,6 @@ namespace StarterAssets
             _animator.SetFloat(Speed, _controller.velocity.magnitude);
         }
 
-        private void didifire()
-        {
-        }
 
         private void GroundedCheck()
         {
@@ -161,7 +158,7 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input
-            if (_input.lookInput.sqrMagnitude >= _threshold)
+            if (_input.lookInput.sqrMagnitude >= Threshold)
             {
                 //Don't multiply mouse input by Time.deltaTime
                 var deltaTimeMultiplier = isCurrentDeviceMouse ? 1.0f : Time.deltaTime;
@@ -188,9 +185,7 @@ namespace StarterAssets
                 true => SprintSpeed,
                 false => MoveSpeed
             };
-            // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (_input.moveInput == Vector2.zero)
             {
@@ -198,10 +193,10 @@ namespace StarterAssets
             }
 
             // a reference to the players current horizontal velocity
-            var currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            var velocity = _controller.velocity;
+            var currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
 
             var speedOffset = 0.1f;
-            //  var inputMagnitude = _input.analogMovement ? _input.moveInput.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -228,7 +223,8 @@ namespace StarterAssets
             if (_input.moveInput != Vector2.zero)
                 // move
             {
-                inputDirection = transform.right * _input.moveInput.x + transform.forward * _input.moveInput.y;
+                var transform1 = transform;
+                inputDirection = transform1.right * _input.moveInput.x + transform1.forward * _input.moveInput.y;
             }
 
 

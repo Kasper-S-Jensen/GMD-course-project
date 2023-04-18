@@ -5,6 +5,7 @@ public class EnemyProjectile : MonoBehaviour
     // Start is called before the first frame update
     public float projectileDamage = 1;
 
+    public LayerMask whatIsGate;
     public GameEvent OnGateDamage;
 
     //  private int projectileLayer = 8;
@@ -35,12 +36,12 @@ public class EnemyProjectile : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent<Health>(out var health))
         {
-            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("TheGate"))
+            if (collision.gameObject.CompareTag("Player"))
             {
                 health.TakeDamage(projectileDamage);
             }
 
-            if (collision.gameObject.layer == 7)
+            if (whatIsGate == (whatIsGate | (1 << collision.gameObject.layer)))
             {
                 health.TakeDamage(projectileDamage);
                 OnGateDamage.Raise(projectileDamage);
