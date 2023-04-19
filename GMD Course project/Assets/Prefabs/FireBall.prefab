@@ -4854,6 +4854,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: 1
+  projectilelayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &877380246789994021
 Rigidbody:
   m_ObjectHideFlags: 0

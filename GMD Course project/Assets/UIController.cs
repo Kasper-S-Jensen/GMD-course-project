@@ -5,6 +5,7 @@ public class UIController : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gateHealth;
+    public TextMeshProUGUI enemiesLeftText;
     public GameEvent OnGameRestart;
 
     private float _gateHealth = 10;
@@ -17,13 +18,20 @@ public class UIController : MonoBehaviour
     {
         _gateMaxHealth = _gateHealth;
         scoreText.SetText("Score: " + _score);
+        enemiesLeftText.SetText("Enemies left: 0");
         gateHealth.SetText("Gate Health: " + _gateHealth + "/" + _gateMaxHealth);
     }
 
 
-    // Update is called once per frame
-    private void Update()
+    public void UpdateEnemiesLeft(Component sender, object data)
     {
+        if (data is not int left)
+        {
+            return;
+        }
+
+        enemiesLeftText.SetText("Enemies left: " + left);
+        Debug.Log("Updated enemies left");
     }
 
 

@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     public Camera fpsCam;
     public Transform attackPoint;
 
-    //bug fixing :D
+    //bug fixing :D     
     public bool allowInvoke = true;
 
     //events

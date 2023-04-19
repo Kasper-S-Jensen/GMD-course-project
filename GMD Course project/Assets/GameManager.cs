@@ -5,6 +5,10 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverMenu;
     public bool isPaused;
+    public GameEvent OnEnemiesLeftChange;
+
+
+    private int _enemiesLeft;
 
     private void Update()
     {
@@ -16,6 +20,18 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+    }
+
+    public void IncreaseEnemiesLeft(Component sender, object data)
+    {
+        _enemiesLeft++;
+        OnEnemiesLeftChange.Raise(_enemiesLeft);
+    }
+
+    public void DecreaseEnemiesLeft(Component sender, object data)
+    {
+        _enemiesLeft--;
+        OnEnemiesLeftChange.Raise(_enemiesLeft);
     }
 
     public void EnableGameOverMenu(Component sender, object data)

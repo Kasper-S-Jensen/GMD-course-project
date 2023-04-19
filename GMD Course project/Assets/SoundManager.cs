@@ -60,55 +60,14 @@ public class SoundManager : MonoBehaviour
         Debug.LogWarning("No available AudioSources to play clip.");
     }
 
-    /*private static SoundManager instance;
-    public AudioClip playerAttackSoundClip;
-    public AudioClip playerJumpSoundClip;
-
-    public AudioClip gameBackGroundMusicClip;
-    private AudioSource gameBackGroundMusic;
-    private AudioSource playerAttackSound;
-    private AudioSource playerJumpSound;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-
-            gameBackGroundMusic = new AudioSource();
-            playerJumpSound = new AudioSource();
-            playerJumpSound = new AudioSource();
-            DontDestroyOnLoad(gameObject);
-            return;
-        }
-
-        if (instance == this)
-        {
-            return;
-        }
-
-
-        Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        gameBackGroundMusic.clip = gameBackGroundMusicClip;
-        gameBackGroundMusic.PlayOneShot(gameBackGroundMusicClip);
-    }
-*/
     public void PlayerJump(Component sender, object data)
     {
-        // playerJumpSound.clip = playerJumpSoundClip;
-        // playerJumpSound.PlayOneShot(playerJumpSoundClip);
         PlayAudioClip("Jump");
     }
 
     public void PlayerAttack(Component sender, object data)
     {
         PlayAudioClip("PlayerAttack");
-        //  playerAttackSound.clip = playerAttackSoundClip;
-        //  playerAttackSound.PlayOneShot(playerAttackSoundClip);
     }
 
     [Serializable]

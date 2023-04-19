@@ -7,6 +7,12 @@ public class WaveSpawner : MonoBehaviour
     public float countdown;
     public Wave[] waves;
     public GameObject spawnPoint;
+
+    public GameEvent OnEnemySpawned;
+
+    // public GameEvent OnEnemyDeath;
+    public GameEvent OnNewWave;
+    public GameEvent OnWaveCompleted;
     private bool readyToCountDown;
     public int currentWaveIndex { get; set; }
 
@@ -54,15 +60,20 @@ public class WaveSpawner : MonoBehaviour
     {
         if (waves[currentWaveIndex].enemiesLeft <= 0)
         {
+            OnWaveCompleted.Raise();
+            Debug.Log("Completed wave");
             return;
         }
 
         waves[currentWaveIndex].enemiesLeft--;
-        Debug.Log("Enemies decrease!");
+        // Debug.Log("Enemies decrease!");
+        //   OnEnemyDeath.Raise();
     }
 
     private IEnumerator SpawnWave()
     {
+        OnNewWave.Raise();
+        Debug.Log("new wave nr." + currentWaveIndex);
         if (currentWaveIndex < waves.Length)
         {
         }
@@ -70,6 +81,7 @@ public class WaveSpawner : MonoBehaviour
         foreach (var enemy in waves[currentWaveIndex].enemies)
         {
             var enemyAI = Instantiate(enemy, spawnPoint.transform);
+            OnEnemySpawned.Raise();
             enemyAI.transform.SetParent(spawnPoint.transform);
             yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
         }

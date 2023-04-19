@@ -437,6 +437,9 @@ MonoBehaviour:
     timeToNextWave: 2
     enemiesLeft: 0
   spawnPoint: {fileID: 125131073}
+  OnEnemySpawned: {fileID: 11400000, guid: 761c2ea05c256074f9610aec08f9679b, type: 2}
+  OnNewWave: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
+  OnWaveCompleted: {fileID: 11400000, guid: 1216342855855794baa33e89363c0b25, type: 2}
 --- !u!4 &331522323
 Transform:
   m_ObjectHideFlags: 0
@@ -482,6 +485,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &408358429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 408358430}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &408358430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408358429}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.04, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396646785}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &697352413 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8877402124822587247, guid: 126112ba7f19aee49ba20e8ada66628a,
@@ -3611,7 +3645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maximumHealth: 10
+  maximumHealth: 1000
   OnGateDestroyed: {fileID: 11400000, guid: da65959179c8e424db1c47fe1cbc226b, type: 2}
 --- !u!1 &1275311202
 GameObject:
@@ -3625,6 +3659,8 @@ GameObject:
   - component: {fileID: 1275311206}
   - component: {fileID: 1275311205}
   - component: {fileID: 1275311204}
+  - component: {fileID: 1275311208}
+  - component: {fileID: 1275311207}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3717,6 +3753,191 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverMenu: {fileID: 16620098}
   isPaused: 0
+  OnEnemiesLeftChange: {fileID: 11400000, guid: d9b2fd9abff9d5e44ba36adf5205f5a4,
+    type: 2}
+--- !u!114 &1275311207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275311202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: c16ca8e742f71344ea6d5efeab9e030c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1275311206}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: DecreaseEnemiesLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1275311208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275311202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 761c2ea05c256074f9610aec08f9679b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1275311206}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: IncreaseEnemiesLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &1309084275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309084276}
+  m_Layer: 0
+  m_Name: Wave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1309084276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309084275}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1396646785}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1396646784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396646785}
+  - component: {fileID: 1396646787}
+  - component: {fileID: 1396646786}
+  m_Layer: 0
+  m_Name: WaveSpawner (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1396646785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396646784}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 52.3, y: -6.2551227, z: -14.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 408358430}
+  - {fileID: 1309084276}
+  m_Father: {fileID: 1664654108}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396646786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396646784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: c16ca8e742f71344ea6d5efeab9e030c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1396646787}
+        m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
+        m_MethodName: DecreaseEnemiesInWave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1396646787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396646784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea4bc6f20af8a7479db895238e8ea3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countdown: 1
+  waves:
+  - enemies:
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    timeToNextEnemy: 1
+    timeToNextWave: 2
+    enemiesLeft: 0
+  - enemies:
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    - {fileID: 2854341398586873191, guid: 789a30d85f370e84f97862e1ea92d43e, type: 3}
+    timeToNextEnemy: 0.3
+    timeToNextWave: 2
+    enemiesLeft: 0
+  spawnPoint: {fileID: 408358429}
+  OnEnemySpawned: {fileID: 11400000, guid: 761c2ea05c256074f9610aec08f9679b, type: 2}
+  OnNewWave: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
+  OnWaveCompleted: {fileID: 11400000, guid: 1216342855855794baa33e89363c0b25, type: 2}
 --- !u!1001 &1400516265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4162,6 +4383,34 @@ MonoBehaviour:
       - m_Target: {fileID: 1452472982}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
         m_MethodName: UpdateGateHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1452472990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452472977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: d9b2fd9abff9d5e44ba36adf5205f5a4, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1452472982}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: UpdateEnemiesLeft
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7936,6 +8185,7 @@ Transform:
   - {fileID: 331522323}
   - {fileID: 1626097394}
   - {fileID: 759344824}
+  - {fileID: 1396646785}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8305,6 +8555,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1927467537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 448034584, guid: 126112ba7f19aee49ba20e8ada66628a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8877402124746912860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1927504399
 GameObject:
   m_ObjectHideFlags: 0
@@ -9346,6 +9608,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 448034584, guid: 126112ba7f19aee49ba20e8ada66628a, type: 3}
+      propertyPath: m_text
+      value: 'Enemies left: 11'
+      objectReference: {fileID: 0}
     - target: {fileID: 1452472982, guid: 126112ba7f19aee49ba20e8ada66628a, type: 3}
       propertyPath: gateHealth
       value: 
@@ -9359,6 +9625,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 9bf6fdfb1acc7944887e9fab238fac57,
         type: 2}
+    - target: {fileID: 1452472982, guid: 126112ba7f19aee49ba20e8ada66628a, type: 3}
+      propertyPath: enemiesLeftText
+      value: 
+      objectReference: {fileID: 1927467537}
     - target: {fileID: 4904755447226222776, guid: 126112ba7f19aee49ba20e8ada66628a,
         type: 3}
       propertyPath: m_Name
