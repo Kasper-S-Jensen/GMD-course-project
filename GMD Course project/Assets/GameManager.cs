@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverMenu;
     public bool isPaused;
     public GameEvent OnEnemiesLeftChange;
+    public GameEvent OnNewWave;
+    public GameEvent OnWaveCompleted;
 
 
     private int _enemiesLeft;
@@ -32,6 +34,12 @@ public class GameManager : MonoBehaviour
     {
         _enemiesLeft--;
         OnEnemiesLeftChange.Raise(_enemiesLeft);
+        if (_enemiesLeft <= 0)
+        {
+            OnWaveCompleted.Raise();
+            Debug.Log("Completed wave");
+            OnNewWave.Raise();
+        }
     }
 
     public void EnableGameOverMenu(Component sender, object data)

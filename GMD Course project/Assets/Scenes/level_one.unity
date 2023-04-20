@@ -469,14 +469,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: c16ca8e742f71344ea6d5efeab9e030c, type: 2}
+  gameEvent: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 331522322}
         m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
-        m_MethodName: DecreaseEnemiesInWave
-        m_Mode: 1
+        m_MethodName: BeginNewWave
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2875,7 +2875,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27994
+  m_Name: pb_Mesh28032
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3755,6 +3755,8 @@ MonoBehaviour:
   isPaused: 0
   OnEnemiesLeftChange: {fileID: 11400000, guid: d9b2fd9abff9d5e44ba36adf5205f5a4,
     type: 2}
+  OnNewWave: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
+  OnWaveCompleted: {fileID: 11400000, guid: 1216342855855794baa33e89363c0b25, type: 2}
 --- !u!114 &1275311207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3852,7 +3854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396646785}
   - component: {fileID: 1396646787}
-  - component: {fileID: 1396646786}
+  - component: {fileID: 1396646788}
   m_Layer: 0
   m_Name: WaveSpawner (1)
   m_TagString: Untagged
@@ -3877,34 +3879,6 @@ Transform:
   m_Father: {fileID: 1664654108}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1396646786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396646784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: c16ca8e742f71344ea6d5efeab9e030c, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1396646787}
-        m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
-        m_MethodName: DecreaseEnemiesInWave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1396646787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3938,6 +3912,34 @@ MonoBehaviour:
   OnEnemySpawned: {fileID: 11400000, guid: 761c2ea05c256074f9610aec08f9679b, type: 2}
   OnNewWave: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
   OnWaveCompleted: {fileID: 11400000, guid: 1216342855855794baa33e89363c0b25, type: 2}
+--- !u!114 &1396646788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396646784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2fc2baa9700d4478f6657f7237f7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b8e612d01d621aa42942e69f6e3bd618, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1396646787}
+        m_TargetAssemblyTypeName: WaveSpawner, Assembly-CSharp
+        m_MethodName: BeginNewWave
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1400516265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8397,7 +8399,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28070
+  m_Name: pb_Mesh28068
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9277,7 +9279,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27888
+  m_Name: pb_Mesh27890
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

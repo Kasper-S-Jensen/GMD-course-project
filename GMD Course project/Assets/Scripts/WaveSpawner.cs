@@ -49,34 +49,39 @@ public class WaveSpawner : MonoBehaviour
             StartCoroutine(SpawnWave());
         }
 
-        if (waves[currentWaveIndex].enemiesLeft == 0)
+        /*if (waves[currentWaveIndex].enemiesLeft == 0)
         {
             readyToCountDown = true;
             currentWaveIndex++;
-        }
+        }*/
     }
 
-    public void DecreaseEnemiesInWave()
+    public void BeginNewWave(Component sender, object data)
+    {
+        currentWaveIndex++;
+        if (currentWaveIndex >= waves.Length)
+        {
+            return;
+        }
+
+        readyToCountDown = true;
+    }
+
+    /*public void DecreaseEnemiesInWave()
     {
         if (waves[currentWaveIndex].enemiesLeft <= 0)
         {
-            OnWaveCompleted.Raise();
-            Debug.Log("Completed wave");
             return;
         }
 
         waves[currentWaveIndex].enemiesLeft--;
         // Debug.Log("Enemies decrease!");
         //   OnEnemyDeath.Raise();
-    }
+    }*/
 
     private IEnumerator SpawnWave()
     {
-        OnNewWave.Raise();
         Debug.Log("new wave nr." + currentWaveIndex);
-        if (currentWaveIndex < waves.Length)
-        {
-        }
 
         foreach (var enemy in waves[currentWaveIndex].enemies)
         {
