@@ -1,15 +1,23 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gateHealth;
-    public TextMeshProUGUI enemiesLeftText;
-    public GameEvent OnGameRestart;
+    public TextMeshProUGUI playerHealth;
 
+    public TextMeshProUGUI enemiesLeftText;
+
+    // public TextMeshProUGUI HealthBar;
+    public GameEvent OnGameRestart;
+    public Slider healthBarSlider;
+    private readonly float _playerHealth = 100;
     private float _gateHealth = 10;
     private float _gateMaxHealth;
+    private float _healthBarValue;
+    private float _playerMaxHealth;
 
     private int _score;
 
@@ -17,9 +25,13 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         _gateMaxHealth = _gateHealth;
+        _playerMaxHealth = _playerHealth;
         scoreText.SetText("Score: " + _score);
         enemiesLeftText.SetText("Enemies left: 0");
+        playerHealth.SetText(_playerHealth + "/" + _playerMaxHealth);
         gateHealth.SetText("Gate Health: " + _gateHealth + "/" + _gateMaxHealth);
+
+        healthBarSlider.value = 1f;
     }
 
 
@@ -62,6 +74,18 @@ public class UIController : MonoBehaviour
 
         _score += amount;
         scoreText.SetText("Score: " + _score);
+    }
+
+    public void UpdateHealthBar(Component sender, object data)
+    {
+        if (data is not float amount)
+        {
+            return;
+        }
+
+        playerHealth.SetText(amount + "/" + _playerMaxHealth);
+        _healthBarValue = amount / 100;
+        healthBarSlider.value = _healthBarValue;
     }
 
     public void ClickRestartButton()

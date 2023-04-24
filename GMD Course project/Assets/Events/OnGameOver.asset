@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebfcf17001f5ec144bb6b96010365bb1, type: 3}
-  m_Name: OnGateDeath
+  m_Name: OnGameOver
   m_EditorClassIdentifier: 
   listeners: []

@@ -25,7 +25,7 @@ public class EnemyRangedAttack : MonoBehaviour, IEnemyAttackPlayer
             var rb = currentProjectile.GetComponent<Rigidbody>();
             Physics.IgnoreCollision(currentProjectile.GetComponent<Collider>(), GetComponent<Collider>());
             rb.AddForce(transform.forward * 16f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 4f, ForceMode.Impulse);
+            //  rb.AddForce(transform.up * 4f, ForceMode.Impulse);
 
             //End of attack code
 

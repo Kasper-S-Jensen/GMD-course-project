@@ -34,6 +34,11 @@ public class EnemyProjectile : MonoBehaviour
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
 
+        if (collision.gameObject.TryGetComponent<PlayerHealth>(out var playerHealth))
+        {
+            playerHealth.TakeDamage(projectileDamage);
+        }
+
         if (collision.gameObject.TryGetComponent<Health>(out var health))
         {
             if (collision.gameObject.CompareTag("Player"))
