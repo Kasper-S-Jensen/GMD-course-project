@@ -1,16 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+    private const string VolumeKey = "Volume";
+
     [SerializeField] private List<AudioInfo> audioClips;
+    [SerializeField] private AudioMixerGroup mixerGroup;
+
     private List<AudioSource> audioSources;
 
     private Dictionary<string, AudioClip> clipDictionary;
+    private float playerprefVolume;
 
     private void Awake()
     {
+        playerprefVolume = PlayerPrefs.GetFloat(VolumeKey);
         // Build dictionary from the audioClips list
         clipDictionary = new Dictionary<string, AudioClip>();
         foreach (var info in audioClips)
@@ -31,11 +38,22 @@ public class SoundManager : MonoBehaviour
         {
             var source = gameObject.AddComponent<AudioSource>();
             source.clip = info.clip;
+            source.outputAudioMixerGroup = mixerGroup;
             audioSources.Add(source);
         }
 
+
         PlayAudioClip("Background");
     }
+
+    private void Start()
+    {
+        Debug.Log(playerprefVolume);
+        mixerGroup.audioMixer.SetFloat(VolumeKey, playerprefVolume);
+        // Save volume level in PlayerPrefs
+        // SaveToPlayerPrefs(PlayerPrefs.GetFloat(VolumeKey));
+    }
+
 
     private void PlayAudioClip(string clipName)
     {
@@ -51,6 +69,7 @@ public class SoundManager : MonoBehaviour
             if (!source.isPlaying)
             {
                 source.clip = clip;
+                //   source.volume = volume;
                 source.Play();
                 return;
             }
@@ -68,6 +87,25 @@ public class SoundManager : MonoBehaviour
     public void PlayerAttack(Component sender, object data)
     {
         PlayAudioClip("PlayerAttack");
+    }
+
+    public void OnAdjustVolume(Component sender, object data)
+    {
+        Debug.Log("reaching");
+        if (data is not float amount)
+        {
+            return;
+        }
+
+        mixerGroup.audioMixer.SetFloat(VolumeKey, amount);
+        // Save volume level in PlayerPrefs
+        SaveToPlayerPrefs(amount);
+    }
+
+    private void SaveToPlayerPrefs(float amount)
+    {
+        PlayerPrefs.SetFloat(VolumeKey, amount);
+        PlayerPrefs.Save();
     }
 
     [Serializable]

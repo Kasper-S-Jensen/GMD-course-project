@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOverMenu;
+    public GameObject pauseMenu;
     public bool isPaused;
     public GameEvent OnEnemiesLeftChange;
     public GameEvent OnNewWave;
@@ -14,14 +15,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isPaused)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        Time.timeScale = isPaused ? 0 : 1;
     }
 
     public void IncreaseEnemiesLeft(Component sender, object data)
@@ -55,5 +49,27 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         isPaused = false;
         // Restart game
+    }
+
+    public void SetFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+    }
+
+    public void TogglePause(Component sender, object data)
+    {
+        if (!isPaused)
+        {
+            pauseMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            isPaused = true;
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            isPaused = false;
+            // resume game
+        }
     }
 }

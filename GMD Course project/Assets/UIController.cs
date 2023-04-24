@@ -12,18 +12,24 @@ public class UIController : MonoBehaviour
 
     // public TextMeshProUGUI HealthBar;
     public GameEvent OnGameRestart;
+    public GameEvent OnVolumeSlide;
+    public GameEvent OnTogglePause;
     public Slider healthBarSlider;
+    public Slider volumeSlider;
     private readonly float _playerHealth = 100;
     private float _gateHealth = 10;
     private float _gateMaxHealth;
     private float _healthBarValue;
     private float _playerMaxHealth;
+    private float _playerPrefVolume;
 
     private int _score;
 
     // Start is called before the first frame update
     private void Start()
     {
+        _playerPrefVolume = PlayerPrefs.GetFloat("Volume");
+        volumeSlider.value = _playerPrefVolume;
         _gateMaxHealth = _gateHealth;
         _playerMaxHealth = _playerHealth;
         scoreText.SetText("Score: " + _score);
@@ -91,5 +97,15 @@ public class UIController : MonoBehaviour
     public void ClickRestartButton()
     {
         OnGameRestart.Raise();
+    }
+
+    public void ClickResumeButton()
+    {
+        OnTogglePause.Raise();
+    }
+
+    public void VolumeSlider(float volume)
+    {
+        OnVolumeSlide.Raise(volume);
     }
 }
