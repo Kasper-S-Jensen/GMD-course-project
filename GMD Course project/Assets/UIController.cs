@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gateHealth;
     public TextMeshProUGUI playerHealth;
-
+    public GameObject WaveCompletedAnnouncementObj;
     public TextMeshProUGUI enemiesLeftText;
 
     // public TextMeshProUGUI HealthBar;
@@ -52,6 +53,17 @@ public class UIController : MonoBehaviour
         Debug.Log("Updated enemies left");
     }
 
+    public void WaveCompletedAnnouncement(Component sender, object data)
+    {
+        StartCoroutine(ActivateForSeconds(WaveCompletedAnnouncementObj, 3));
+    }
+
+    private IEnumerator ActivateForSeconds(GameObject go, float seconds)
+    {
+        go.SetActive(true);
+        yield return new WaitForSeconds(seconds);
+        go.SetActive(false);
+    }
 
     public void UpdateGateHealth(Component sender, object data)
     {

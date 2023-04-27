@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 6847326544367358338}
   - component: {fileID: 6846157296117262206}
   - component: {fileID: 6757480844376040107}
-  - component: {fileID: 6757480844376040104}
   - component: {fileID: 877380246789994021}
+  - component: {fileID: -2211958879913026055}
   m_Layer: 8
-  m_Name: PurpleFireball
+  m_Name: EnemyFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4841,22 +4841,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.83
   m_Center: {x: 0, y: 0, z: 0.5000001}
---- !u!114 &6757480844376040104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6755837675473529000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0fa93c1edade3d44967c4634378deb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileDamage: 1
-  projectilelayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!54 &877380246789994021
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4873,6 +4857,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2211958879913026055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755837675473529000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f3fa1be4fb6406baf7a8200ebc6ad97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileDamage: 1
+  whatIsGate:
+    serializedVersion: 2
+    m_Bits: 128
+  OnGateDamage: {fileID: 11400000, guid: eae998a8cd03f5345ba327882c143677, type: 2}
 --- !u!1 &6755897215149704032
 GameObject:
   m_ObjectHideFlags: 0

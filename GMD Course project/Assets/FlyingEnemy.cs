@@ -52,6 +52,7 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
     private void OnDestroy()
     {
         OnEnemyDeath.Raise(ExperienceOnDeath);
+        DestroyEnemy();
     }
 
     private void OnDrawGizmosSelected()

@@ -46,6 +46,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     private void OnDestroy()
     {
         OnEnemyDeath.Raise(ExperienceOnDeath);
+        DestroyEnemy();
     }
 
 

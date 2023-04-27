@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverMenu;
     public GameObject pauseMenu;
+
     public bool isPaused;
     public GameEvent OnEnemiesLeftChange;
     public GameEvent OnNewWave;

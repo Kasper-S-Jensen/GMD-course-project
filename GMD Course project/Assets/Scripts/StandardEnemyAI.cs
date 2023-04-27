@@ -50,6 +50,7 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     private void OnDestroy()
     {
         OnEnemyDeath.Raise(ExperienceOnDeath);
+        DestroyEnemy();
     }
 
 
@@ -62,7 +63,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         Gizmos.DrawWireSphere(position, sightRange);
     }
 
-    //   public event EventHandler OnEnemyDeath;
 
     public void CheckState()
     {
@@ -155,8 +155,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
 
-
-        //OnEnemyDeath?.Invoke(this, new OnEnemyDeathEventArgs {ExperienceOnDeath = ExperienceOnDeath});
 
         Destroy(gameObject);
     }

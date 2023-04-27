@@ -46,7 +46,7 @@ public class WaveSpawner : MonoBehaviour
         if (countdown <= 0)
         {
             readyToCountDown = false;
-            countdown = waves[currentWaveIndex].timeToNextEnemy;
+            countdown = waves[currentWaveIndex].timeToNextWave;
             StartCoroutine(SpawnWave());
         }
 
@@ -75,7 +75,7 @@ public class WaveSpawner : MonoBehaviour
 
         foreach (var enemy in waves[currentWaveIndex].enemies)
         {
-            var enemyAI = Instantiate(enemy, spawnPoint.transform);
+            var enemyAI = Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
             OnEnemySpawned.Raise();
             enemyAI.transform.SetParent(spawnPoint.transform);
             yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
