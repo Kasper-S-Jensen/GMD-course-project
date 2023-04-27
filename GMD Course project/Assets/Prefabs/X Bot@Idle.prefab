@@ -980,7 +980,6 @@ GameObject:
   - component: {fileID: 2854341398586873192}
   - component: {fileID: 4745728500307110944}
   - component: {fileID: 441641240451539471}
-  - component: {fileID: -222158332710323580}
   m_Layer: 0
   m_Name: X Bot@Idle
   m_TagString: Enemy
@@ -1078,7 +1077,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3124866682291687956}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.38
+  m_Radius: 0.5
   m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1122,18 +1121,6 @@ MonoBehaviour:
   projectile: {fileID: 5644850614687075804, guid: b735e3d48e0aab44fb4c7938a98462e8,
     type: 3}
   barrelEnd: {fileID: 423656790}
---- !u!114 &-222158332710323580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3124866682291687956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd0665e5463b7914b8f941549a1f9d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3484893901057679310
 GameObject:
   m_ObjectHideFlags: 0

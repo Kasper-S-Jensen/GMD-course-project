@@ -1570,6 +1570,7 @@ GameObject:
   - component: {fileID: 6228643821912734119}
   - component: {fileID: 6228643821912734120}
   - component: {fileID: 6228643821912734123}
+  - component: {fileID: 8969995068271032652}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1678,6 +1679,7 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 6228643823289649051}
   TopClamp: 85
   BottomClamp: -85
+  OnPlayerJump: {fileID: 0}
 --- !u!114 &6228643821912734119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,6 +1692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4656323e053e86740a823c753023516d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPauseToggle: {fileID: 0}
 --- !u!114 &6228643821912734120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,6 +1787,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 15cf69b1-6fb6-4293-b2fa-93428437df84
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1cc46739-3f36-4822-a6c7-d8e57046dcb7
+    m_ActionName: Player/TogglePause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1811,6 +1818,23 @@ MonoBehaviour:
   fpsCam: {fileID: 1116783324460215727}
   attackPoint: {fileID: 6228643821798974024}
   allowInvoke: 1
+  OnPlayerAttack: {fileID: 0}
+--- !u!114 &8969995068271032652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6535285321925720041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b717374738b4d99458b1dc054d084ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maximumHealth: 100
+  OnPlayerDamaged: {fileID: 11400000, guid: 86b5cb7c86e9ab24ab354d7f559904ee, type: 2}
+  OnPlayerDeath: {fileID: 11400000, guid: da65959179c8e424db1c47fe1cbc226b, type: 2}
 --- !u!1 &6818869525920001744
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ namespace StarterAssets
 {
     public class PlayerController : MonoBehaviour
     {
-        private const float Threshold = 0.02f;
+        private const float Threshold = 0.01f;
         private static readonly int Speed = Animator.StringToHash("Speed");
 
         [Header("Player")] [Tooltip("Move speed of the character in m/s")]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -67,17 +68,6 @@ public class WaveSpawner : MonoBehaviour
         readyToCountDown = true;
     }
 
-    /*public void DecreaseEnemiesInWave()
-    {
-        if (waves[currentWaveIndex].enemiesLeft <= 0)
-        {
-            return;
-        }
-
-        waves[currentWaveIndex].enemiesLeft--;
-        // Debug.Log("Enemies decrease!");
-        //   OnEnemyDeath.Raise();
-    }*/
 
     private IEnumerator SpawnWave()
     {
@@ -96,9 +86,9 @@ public class WaveSpawner : MonoBehaviour
 [Serializable]
 public class Wave
 {
-    public EnemyAI[] enemies;
     public float timeToNextEnemy;
     public float timeToNextWave;
 
     [HideInInspector] public int enemiesLeft;
+    public NavMeshAgent[] enemies;
 }

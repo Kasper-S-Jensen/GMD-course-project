@@ -1,8 +1,8 @@
-    using StarterAssets.Interfaces;
+using StarterAssets.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class StandardEnemyAI : MonoBehaviour, IEnemyAI
 {
     private static readonly int Speed = Animator.StringToHash("Speed");
     public GameEvent OnEnemyDeath;
@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
 
     //   public event EventHandler OnEnemyDeath;
 
-    private void CheckState()
+    public void CheckState()
     {
         var position = transform.position;
         playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);

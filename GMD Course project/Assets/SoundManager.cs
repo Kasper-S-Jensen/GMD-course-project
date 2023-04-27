@@ -63,13 +63,13 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
+
         // Find an available AudioSource to play the clip
         foreach (var source in audioSources)
         {
             if (!source.isPlaying)
             {
                 source.clip = clip;
-                //   source.volume = volume;
                 source.Play();
                 return;
             }
@@ -79,6 +79,30 @@ public class SoundManager : MonoBehaviour
         Debug.LogWarning("No available AudioSources to play clip.");
     }
 
+    private void StopAudioClip(string clipName)
+    {
+        // Find the index of the clip in the array using its name
+        var clipIndex = -1;
+        for (var i = 0; i < audioClips.Count; i++)
+        {
+            if (audioClips[i].clipName == clipName)
+            {
+                clipIndex = i;
+                break;
+            }
+        }
+
+        // If the clip index is valid, stop the audio source
+        if (clipIndex >= 0)
+        {
+            audioSources[clipIndex].Stop();
+        }
+        else
+        {
+            Debug.LogError("Clip not found: " + clipName);
+        }
+    }
+
     public void PlayerJump(Component sender, object data)
     {
         PlayAudioClip("Jump");
@@ -86,6 +110,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayerAttack(Component sender, object data)
     {
+        StopAudioClip("PlayerAttack");
         PlayAudioClip("PlayerAttack");
     }
 

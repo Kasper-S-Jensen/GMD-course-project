@@ -41,11 +41,6 @@ public class EnemyProjectile : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent<Health>(out var health))
         {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                health.TakeDamage(projectileDamage);
-            }
-
             if (whatIsGate == (whatIsGate | (1 << collision.gameObject.layer)))
             {
                 health.TakeDamage(projectileDamage);
