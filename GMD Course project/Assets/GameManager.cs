@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
     public GameEvent OnEnemiesLeftChange;
     public GameEvent OnNewWave;
     public GameEvent OnWaveCompleted;
+    public GameEvent OnGameWon;
+    private int _currentWave;
 
 
     private int _enemiesLeft;
+    private int _wavesTotal;
 
     private void Update()
     {
@@ -25,15 +28,29 @@ public class GameManager : MonoBehaviour
         OnEnemiesLeftChange.Raise(_enemiesLeft);
     }
 
+    public void IncrementTotalWaves(Component sender, object data)
+    {
+        _wavesTotal++;
+    }
+
     public void DecreaseEnemiesLeft(Component sender, object data)
     {
         _enemiesLeft--;
         OnEnemiesLeftChange.Raise(_enemiesLeft);
         if (_enemiesLeft <= 0)
         {
-            OnWaveCompleted.Raise();
+            _currentWave++;
+
             Debug.Log("Completed wave");
             OnNewWave.Raise();
+            if (_currentWave >= 2)
+            {
+                OnGameWon.Raise();
+                Debug.Log("YOU WON from game mang");
+                return;
+            }
+
+            OnWaveCompleted.Raise();
         }
     }
 

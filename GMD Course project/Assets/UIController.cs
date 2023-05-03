@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI gateHealth;
     public TextMeshProUGUI playerHealth;
     public GameObject WaveCompletedAnnouncementObj;
+    public GameObject GameWonAnnouncementObj;
     public TextMeshProUGUI enemiesLeftText;
 
     // public TextMeshProUGUI HealthBar;
@@ -56,6 +57,11 @@ public class UIController : MonoBehaviour
     public void WaveCompletedAnnouncement(Component sender, object data)
     {
         StartCoroutine(ActivateForSeconds(WaveCompletedAnnouncementObj, 3));
+    }
+
+    public void GameWonAnnouncement(Component sender, object data)
+    {
+        StartCoroutine(ActivateForSeconds(GameWonAnnouncementObj, 10));
     }
 
     private IEnumerator ActivateForSeconds(GameObject go, float seconds)

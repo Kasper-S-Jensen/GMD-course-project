@@ -114,6 +114,13 @@ public class SoundManager : MonoBehaviour
         PlayAudioClip("PlayerAttack");
     }
 
+    public void GameWon(Component sender, object data)
+    {
+        StopAudioClip("Background");
+        PlayAudioClip("Trumpets");
+        PlayAudioClip("CrowdCheer");
+    }
+
     public void OnAdjustVolume(Component sender, object data)
     {
         Debug.Log("reaching");
