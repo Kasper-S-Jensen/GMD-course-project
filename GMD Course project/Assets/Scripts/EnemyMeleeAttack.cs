@@ -18,14 +18,8 @@ public class EnemyMeleeAttack : MonoBehaviour, IEnemyAttackPlayer
 
     public void AttackPlayer()
     {
-        // if (!alreadyAttacked)
-        //  {
-        //End of attack code
-
         alreadyAttacked = true;
         _animator.SetBool(Attack, alreadyAttacked);
-        //    Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        // }
     }
 
     private void ResetAttack()

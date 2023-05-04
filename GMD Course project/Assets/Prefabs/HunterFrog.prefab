@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e0f6320ee716e438608686c627ee2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 8
 --- !u!1 &8360993462231583982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,7 +2062,7 @@ GameObject:
   - component: {fileID: 8132910611033255256}
   - component: {fileID: 8132910611033255258}
   m_Layer: 0
-  m_Name: Frog
+  m_Name: HunterFrog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

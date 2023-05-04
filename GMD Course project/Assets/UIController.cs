@@ -19,7 +19,7 @@ public class UIController : MonoBehaviour
     public Slider healthBarSlider;
     public Slider volumeSlider;
     private readonly float _playerHealth = 100;
-    private float _gateHealth = 10;
+    private float _gateHealth = 100;
     private float _gateMaxHealth;
     private float _healthBarValue;
     private float _playerMaxHealth;

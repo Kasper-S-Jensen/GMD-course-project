@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7746114696344899746}
   - component: {fileID: 1524366715096367747}
   m_Layer: 9
-  m_Name: EnemyProjectile
+  m_Name: RedRunnerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3fa1be4fb6406baf7a8200ebc6ad97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileDamage: 1
+  projectileDamage: 3
   whatIsGate:
     serializedVersion: 2
     m_Bits: 128

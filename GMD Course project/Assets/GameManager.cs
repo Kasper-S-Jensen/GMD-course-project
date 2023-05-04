@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("Completed wave");
             OnNewWave.Raise();
-            if (_currentWave >= 2)
+            if (_currentWave >= 3)
             {
                 OnGameWon.Raise();
                 Debug.Log("YOU WON from game mang");
