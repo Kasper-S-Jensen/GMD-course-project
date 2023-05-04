@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject container;
+    public GameObject bulletContainer;
 
     //bullet 
     public GameObject projectile;
@@ -11,13 +11,13 @@ public class PlayerAttack : MonoBehaviour
     public float shootForce, upwardForce;
 
     //Gun stats
-    public float timeBetweenShooting, timeBetweenShots;
+    public float timeBetweenShooting;
 
     //Reference
     public Camera fpsCam;
     public Transform attackPoint;
 
-    //bug fixing :D     
+    //helped with debug
     public bool allowInvoke = true;
 
     //events
@@ -54,22 +54,21 @@ public class PlayerAttack : MonoBehaviour
         readyToShoot = false;
 
         //Find the exact hit position using a raycast
-        var ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f,
-            0)); //Just a ray through the middle of your current view
+        var ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         //check if ray hits something
-        Vector3 targetPoint;
-        targetPoint =
-            Physics.Raycast(ray, out hit) ? hit.point : ray.GetPoint(75); //Just a point far away from the player
+        Vector3 maxrangePoint;
+        maxrangePoint =
+            Physics.Raycast(ray, out hit) ? hit.point : ray.GetPoint(80); //Just a point far away from the player
 
-        //Calculate direction from attackPoint to targetPoint
-        var direction = targetPoint - attackPoint.position;
+        //Calculate direction from attackPoint to maxrange
+        var direction = maxrangePoint - attackPoint.position;
 
         //Instantiate bullet/projectile
         var currentBullet =
             Instantiate(projectile, attackPoint.position, Quaternion.identity,
-                container.transform); //store instantiated bullet in currentBullet
+                bulletContainer.transform); //store instantiated bullet in currentBullet
         //Rotate bullet to shoot direction
         currentBullet.transform.forward = direction.normalized;
 
@@ -80,12 +79,8 @@ public class PlayerAttack : MonoBehaviour
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
         OnPlayerAttack.Raise();
 
-        //Instantiate muzzle flash, if you have one
-        //  if (muzzleFlash != null)
-        //    Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
 
-
-        //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
+        //Invoke resetShot function (if not already invooked), with your timeBetweenShooting
         if (!allowInvoke)
         {
             return;
@@ -97,7 +92,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void ResetShot()
     {
-        //Allow shooting and invoking again
         readyToShoot = true;
         allowInvoke = true;
     }

@@ -13,37 +13,31 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
+
     private NavMeshAgent _agent;
-
-
     private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
-    private IEnemyAttackTheGate _enemyAttackTheGate;
 
-    private Transform _player;
-    private Transform _theGate;
+    private Transform _player, _theGate;
 
     private void Awake()
     {
         _enemyAttackPlayer = GetComponent<IEnemyAttackPlayer>();
-        _enemyAttackTheGate = GetComponent<IEnemyAttackTheGate>();
         _player = GameObject.FindWithTag("Player").transform;
         _theGate = GameObject.FindWithTag("TheGate").transform;
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
+
     private void Start()
     {
         CheckState();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         Animate();
-
         CheckState();
     }
 
@@ -54,6 +48,7 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     }
 
 
+    //debugging
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -67,15 +62,11 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     public void CheckState()
     {
         var position = transform.position;
-        playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
-
-        gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
-        gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
+        PlayerRange(position);
+        GateRange(position);
 
         if (gateInSightRange && gateInAttackRange && !playerInSightRange && !playerInAttackRange)
         {
-            Debug.Log("ATTACKING GATE");
             AttackGate();
         }
 
@@ -95,6 +86,18 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         }
     }
 
+    private void PlayerRange(Vector3 position)
+    {
+        playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
+    }
+
+    private void GateRange(Vector3 position)
+    {
+        gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
+        gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
+    }
+
     private void AttackGate()
     {
         //Make sure enemy doesn't move
@@ -104,7 +107,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
             new Vector3(_theGate.transform.position.x, transform.position.y, _theGate.transform.position.z);
         transform.LookAt(lookAtTarget);
 
-        //  _enemyAttackTheGate.AttackGate(_agent);
         _enemyAttackPlayer.AttackPlayer();
     }
 
@@ -112,27 +114,18 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     private void StormTheGate()
     {
         _agent.SetDestination(_theGate.position);
-        /*if (Vector3.Distance(_agent.transform.position, _theGate.transform.position) < 1)
-        {
-            DestroyEnemy();
-        }*/
-
-
-        //  IterateWaypointIndex();
     }
 
 
     private void ChasePlayer()
     {
         _agent.SetDestination(_player.position);
-        //  IterateWaypointIndex();
     }
 
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
         _agent.SetDestination(transform.position);
-
         var lookAtTarget =
             new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z);
         transform.LookAt(lookAtTarget);
@@ -151,11 +144,8 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     {
         var o = gameObject.transform;
         var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
-
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
-
-
         Destroy(gameObject);
     }
 }

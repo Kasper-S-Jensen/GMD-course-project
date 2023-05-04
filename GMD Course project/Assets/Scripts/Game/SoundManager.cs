@@ -18,13 +18,14 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         playerprefVolume = PlayerPrefs.GetFloat(VolumeKey);
-        // Build dictionary from the audioClips list
+
+        //create list of audioinfos
         clipDictionary = new Dictionary<string, AudioClip>();
         foreach (var info in audioClips)
         {
             if (clipDictionary.ContainsKey(info.clipName))
             {
-                Debug.LogWarning($"Duplicate clip name: {info.clipName}");
+                Debug.LogWarning($"Duplicated clip name: {info.clipName}");
             }
             else
             {
@@ -42,21 +43,18 @@ public class SoundManager : MonoBehaviour
             audioSources.Add(source);
         }
 
-
         PlayAudioClip("Background");
     }
 
     private void Start()
     {
-        Debug.Log(playerprefVolume);
         mixerGroup.audioMixer.SetFloat(VolumeKey, playerprefVolume);
-        // Save volume level in PlayerPrefs
-        // SaveToPlayerPrefs(PlayerPrefs.GetFloat(VolumeKey));
     }
 
 
     private void PlayAudioClip(string clipName)
     {
+        //check if renamed
         if (!clipDictionary.TryGetValue(clipName, out var clip))
         {
             Debug.LogError($"Audio clip '{clipName}' not found.");
@@ -64,42 +62,39 @@ public class SoundManager : MonoBehaviour
         }
 
 
-        // Find an available AudioSource to play the clip
+        // Find an available AudioSource to play the clipp
         foreach (var source in audioSources)
         {
-            if (!source.isPlaying)
+            if (source.isPlaying)
             {
-                source.clip = clip;
-                source.Play();
-                return;
+                continue;
             }
-        }
 
-        // If no available AudioSource is found, log a warning
-        Debug.LogWarning("No available AudioSources to play clip.");
+            source.clip = clip;
+            source.Play();
+            return;
+        }
     }
 
     private void StopAudioClip(string clipName)
     {
-        // Find the index of the clip in the array using its name
+        // Find the index of the clip in the array using its naame
         var clipIndex = -1;
         for (var i = 0; i < audioClips.Count; i++)
         {
-            if (audioClips[i].clipName == clipName)
+            if (audioClips[i].clipName != clipName)
             {
-                clipIndex = i;
-                break;
+                continue;
             }
+
+            clipIndex = i;
+            break;
         }
 
         // If the clip index is valid, stop the audio source
         if (clipIndex >= 0)
         {
             audioSources[clipIndex].Stop();
-        }
-        else
-        {
-            Debug.LogError("Clip not found: " + clipName);
         }
     }
 
@@ -116,20 +111,19 @@ public class SoundManager : MonoBehaviour
 
     public void GameWon(Component sender, object data)
     {
-        StopAudioClip("Background");
         PlayAudioClip("Trumpets");
         PlayAudioClip("CrowdCheer");
     }
 
     public void OnAdjustVolume(Component sender, object data)
     {
-        Debug.Log("reaching");
         if (data is not float amount)
         {
             return;
         }
 
         mixerGroup.audioMixer.SetFloat(VolumeKey, amount);
+
         // Save volume level in PlayerPrefs
         SaveToPlayerPrefs(amount);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public float currentHealth;
-    public float maximumHealth = 2;
+    public float maximumHealth;
     public GameEvent OnPlayerDamaged;
     public GameEvent OnPlayerDeath;
 
@@ -14,7 +14,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        Debug.Log("Player hurt!");
         currentHealth -= damageAmount;
 
         if (currentHealth <= 0)
@@ -29,7 +28,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player died!");
         OnPlayerDeath.Raise();
     }
 }

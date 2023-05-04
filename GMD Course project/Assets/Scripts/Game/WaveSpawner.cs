@@ -10,8 +10,6 @@ public class WaveSpawner : MonoBehaviour
     public GameObject spawnPoint;
 
     public GameEvent OnEnemySpawned;
-
-    // public GameEvent OnEnemyDeath;
     public GameEvent OnNewWave;
     public GameEvent OnWaveCompleted;
     private bool readyToCountDown;
@@ -33,7 +31,7 @@ public class WaveSpawner : MonoBehaviour
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("YOU WON");
+            //won game
             return;
         }
 
@@ -49,12 +47,6 @@ public class WaveSpawner : MonoBehaviour
             countdown = waves[currentWaveIndex].timeToNextWave;
             StartCoroutine(SpawnWave());
         }
-
-        /*if (waves[currentWaveIndex].enemiesLeft == 0)
-        {
-            readyToCountDown = true;
-            currentWaveIndex++;
-        }*/
     }
 
     public void BeginNewWave(Component sender, object data)
@@ -71,8 +63,6 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        Debug.Log("new wave nr." + currentWaveIndex);
-
         foreach (var enemy in waves[currentWaveIndex].enemies)
         {
             var enemyAI = Instantiate(enemy, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);

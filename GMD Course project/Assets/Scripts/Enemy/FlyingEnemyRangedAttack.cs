@@ -20,6 +20,7 @@ public class FlyingEnemyRangedAttack : MonoBehaviour, IEnemyAttackPlayer
         var rb = currentProjectile.GetComponent<Rigidbody>();
         Physics.IgnoreCollision(currentProjectile.GetComponent<Collider>(), GetComponent<Collider>());
         rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
+        //create arc
         rb.AddForce(transform.up * 4f, ForceMode.Impulse);
     }
 }

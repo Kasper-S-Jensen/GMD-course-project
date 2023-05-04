@@ -6,21 +6,10 @@ public class PlayerProjectile : MonoBehaviour
     public float projectileDamage = 1;
     public LayerMask projectilelayer;
 
-    private Rigidbody rb;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     private void Start()
     {
         Destroy(gameObject, 1f);
-    }
-
-    private void OnDestroy()
-    {
-        //explosion
     }
 
     // Update is called once per frame

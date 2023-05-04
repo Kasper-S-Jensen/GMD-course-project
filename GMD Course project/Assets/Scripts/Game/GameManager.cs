@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
 
     private int _enemiesLeft;
-    private int _wavesTotal;
+
 
     private void Update()
     {
@@ -28,30 +28,25 @@ public class GameManager : MonoBehaviour
         OnEnemiesLeftChange.Raise(_enemiesLeft);
     }
 
-    public void IncrementTotalWaves(Component sender, object data)
-    {
-        _wavesTotal++;
-    }
 
     public void DecreaseEnemiesLeft(Component sender, object data)
     {
         _enemiesLeft--;
         OnEnemiesLeftChange.Raise(_enemiesLeft);
-        if (_enemiesLeft <= 0)
+        if (_enemiesLeft > 0)
         {
-            _currentWave++;
-
-            Debug.Log("Completed wave");
-            OnNewWave.Raise();
-            if (_currentWave >= 3)
-            {
-                OnGameWon.Raise();
-                Debug.Log("YOU WON from game mang");
-                return;
-            }
-
-            OnWaveCompleted.Raise();
+            return;
         }
+
+        _currentWave++;
+        OnNewWave.Raise();
+        if (_currentWave >= 3)
+        {
+            OnGameWon.Raise();
+            return;
+        }
+
+        OnWaveCompleted.Raise();
     }
 
     public void EnableGameOverMenu(Component sender, object data)
@@ -66,7 +61,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Cursor.lockState = CursorLockMode.Locked;
         isPaused = false;
-        // Restart game
     }
 
     public void SetFullscreen(bool isFullscreen)
@@ -87,7 +81,6 @@ public class GameManager : MonoBehaviour
             pauseMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             isPaused = false;
-            // resume game
         }
     }
 }

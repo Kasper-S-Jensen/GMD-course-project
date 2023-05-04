@@ -13,7 +13,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
 
     //States
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public bool playerInAttackRange;
     private NavMeshAgent _agent;
 
 
@@ -50,6 +50,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     }
 
 
+    //debugging
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -64,7 +65,6 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     public void CheckState()
     {
         var position = transform.position;
-        //    playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
 
         if (!playerInAttackRange)
@@ -87,7 +87,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
+        //Make sure enemy doesn't movee
         _agent.SetDestination(transform.position);
 
         var lookAtTarget =
@@ -108,13 +108,8 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     {
         var o = gameObject.transform;
         var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
-
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
-
-
-        //OnEnemyDeath?.Invoke(this, new OnEnemyDeathEventArgs {ExperienceOnDeath = ExperienceOnDeath});
-
         Destroy(gameObject);
     }
 }

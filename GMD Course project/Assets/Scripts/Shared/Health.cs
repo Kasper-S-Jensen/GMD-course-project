@@ -25,7 +25,6 @@ public class Health : MonoBehaviour
     {
         if (gameObject.CompareTag("TheGate"))
         {
-            Debug.Log("GAME OVER");
             OnGateDestroyed.Raise();
             return;
         }

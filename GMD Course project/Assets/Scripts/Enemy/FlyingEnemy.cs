@@ -4,25 +4,21 @@ using UnityEngine.AI;
 
 public class FlyingEnemy : MonoBehaviour, IEnemyAI
 {
-    private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Attack = Animator.StringToHash("Attack");
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
     public LayerMask whatIsPlayer, whatIsGate;
     public GameObject explosion;
 
-    public float sightRange, attackRange;
+    public float sightRange, attackRange, flyingHeight = 5f;
     public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
-    public float flyingHeight = 5f;
 
     private NavMeshAgent _agent;
     private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
     private IEnemyAttackTheGate _enemyAttackTheGate;
 
-
-    private Transform _player;
-    private Transform _theGate;
+    private Transform _player, _theGate;
     private float initialFlyingHeight;
 
     private void Awake()
@@ -44,7 +40,6 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
 
     private void Update()
     {
-        // Animate();
         CheckState();
     }
 
@@ -55,6 +50,7 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         DestroyEnemy();
     }
 
+    //for debugging
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -68,11 +64,8 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
     public void CheckState()
     {
         var position = transform.position;
-        playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
-
-        gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
-        gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
+        PlayerRange(position);
+        GateRange(position);
 
         if (gateInSightRange && gateInAttackRange && !playerInSightRange && !playerInAttackRange)
         {
@@ -95,18 +88,28 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         }
     }
 
+    private void PlayerRange(Vector3 position)
+    {
+        playerInSightRange = Physics.CheckSphere(position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(position, attackRange, whatIsPlayer);
+    }
+
+    private void GateRange(Vector3 position)
+    {
+        gateInSightRange = Physics.CheckSphere(position, sightRange, whatIsGate);
+        gateInAttackRange = Physics.CheckSphere(position, attackRange, whatIsGate);
+    }
+
     private void AttackGate()
     {
-        Debug.Log("ghost fire");
-        //Make sure enemy doesn't move
+        //Make sure enemy doesn't move while attacking
         MaintainFlyingHeight();
 
+        var theGateTransform = _theGate.transform;
         var lookAtTarget =
-            new Vector3(_theGate.transform.position.x, transform.position.y, _theGate.transform.position.z);
+            new Vector3(theGateTransform.position.x, transform.position.y, theGateTransform.position.z);
         transform.LookAt(lookAtTarget);
         _animator.SetBool(Attack, true);
-        //  _enemyAttackTheGate.AttackGate(_agent);
-        // _enemyAttackPlayer.AttackPlayer();
     }
 
 
@@ -123,15 +126,19 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         FlyToDestination(_player.position);
     }
 
+
     private void FlyToDestination(Vector3 destination)
     {
+        //flying logic
         destination.y = initialFlyingHeight + flyingHeight;
         _agent.SetDestination(destination);
 
         // Maintain flying height
-        transform.position = new Vector3(transform.position.x,
+        var position = transform.position;
+        position = new Vector3(position.x,
             initialFlyingHeight + flyingHeight,
-            transform.position.z);
+            position.z);
+        transform.position = position;
     }
 
     private void AttackPlayer()
@@ -144,7 +151,7 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
 
     private void MaintainFlyingHeight()
     {
-        // Maintain flying height
+        // Maintain flying height at all times
         transform.position = new Vector3(transform.position.x,
             initialFlyingHeight + flyingHeight,
             transform.position.z);
@@ -153,6 +160,7 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
             transform.position.z));
     }
 
+
     //triggered by animation event
     private void FireProjectile()
     {
@@ -160,21 +168,12 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
     }
 
 
-    private void Animate()
-    {
-        _animator.SetFloat(Speed, _agent.velocity.magnitude);
-    }
-
-
     private void DestroyEnemy()
     {
         var o = gameObject.transform;
         var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
-
         var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
         Destroy(explosionObj, 2f);
-
-
         Destroy(gameObject);
     }
 }

@@ -66,6 +66,8 @@ namespace StarterAssets
 
         // cinemachine
         private float _cinemachineTargetPitch;
+
+
         private CharacterController _controller;
         private float _fallTimeoutDelta;
         private InputManager _input;

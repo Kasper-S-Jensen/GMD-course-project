@@ -19,14 +19,11 @@ public class EnemyRangedAttack : MonoBehaviour, IEnemyAttackPlayer
     {
         if (!alreadyAttacked)
         {
-            //Attack code here
             var currentProjectile = Instantiate(projectile, barrelEnd.position, Quaternion.identity,
                 bulletContainer.transform);
             var rb = currentProjectile.GetComponent<Rigidbody>();
             Physics.IgnoreCollision(currentProjectile.GetComponent<Collider>(), GetComponent<Collider>());
             rb.AddForce(transform.forward * 16f, ForceMode.Impulse);
-            //  rb.AddForce(transform.up * 4f, ForceMode.Impulse);
-
             //End of attack code
 
             alreadyAttacked = true;

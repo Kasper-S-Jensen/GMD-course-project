@@ -51,7 +51,6 @@ public class UIController : MonoBehaviour
         }
 
         enemiesLeftText.SetText("Enemies left: " + left);
-        Debug.Log("Updated enemies left");
     }
 
     public void WaveCompletedAnnouncement(Component sender, object data)
