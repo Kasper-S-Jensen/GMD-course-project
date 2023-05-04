@@ -1,5 +1,5 @@
 # Wizard defender
-A game created in Unity, during the Game development course at VIA University College. The game is about defending your main gate to the castle from waves of enemies that will constantly try to knock down the gate... or you.
+A game created in Unity, during the Game development course at VIA University College. The game is about defending the main gate to the castle from waves of enemies that constantly tries to knock down the gate... or you.
 
 ## Link to video demonstration
 link
