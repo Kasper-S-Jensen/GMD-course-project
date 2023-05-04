@@ -27,6 +27,9 @@ https://quaternius.com
 
 
 ## Assets
+### Charactor Controller
+https://assetstore.unity.com/packages/essentials/starter-assets-third-person-character-controller-196526
+
 
 ### Particles
 https://assetstore.unity.com/packages/vfx/particles/particle-pack-127325  
@@ -43,5 +46,3 @@ https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-5
 https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776  
 *Jumping and firing effect*
 
-### Charactor Controller
-https://assetstore.unity.com/packages/essentials/starter-assets-third-person-character-controller-196526
