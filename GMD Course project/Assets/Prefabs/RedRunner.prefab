@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3751db80fd30493aa3352db3fad6e868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 0.2
+  timeBetweenAttacks: 0.4
   projectile: {fileID: 5644850614687075804, guid: b735e3d48e0aab44fb4c7938a98462e8,
     type: 3}
   barrelEnd: {fileID: 423656790}
