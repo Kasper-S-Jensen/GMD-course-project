@@ -21,6 +21,8 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
     private Transform _player, _theGate;
     private float initialFlyingHeight;
 
+    private bool isQuitting;
+
     private void Awake()
     {
         _enemyAttackPlayer = GetComponent<IEnemyAttackPlayer>();
@@ -43,11 +45,20 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         CheckState();
     }
 
-
     private void OnDestroy()
     {
+        if (isQuitting)
+        {
+            return;
+        }
+
         OnEnemyDeath.Raise(ExperienceOnDeath);
         DestroyEnemy();
+    }
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
 
     //for debugging

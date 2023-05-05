@@ -25,11 +25,13 @@ public class UIController : MonoBehaviour
     private float _playerMaxHealth;
     private float _playerPrefVolume;
 
-    private int _score;
+    public static int _score { get; set; }
+
 
     // Start is called before the first frame update
     private void Start()
     {
+        _score = 0;
         _playerPrefVolume = PlayerPrefs.GetFloat("Volume");
         volumeSlider.value = _playerPrefVolume;
         _gateMaxHealth = _gateHealth;

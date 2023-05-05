@@ -13,12 +13,13 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
-
     private NavMeshAgent _agent;
     private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
 
     private Transform _player, _theGate;
+
+    private bool isQuitting;
 
     private void Awake()
     {
@@ -43,8 +44,18 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
 
     private void OnDestroy()
     {
+        if (isQuitting)
+        {
+            return;
+        }
+
         OnEnemyDeath.Raise(ExperienceOnDeath);
         DestroyEnemy();
+    }
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
 
 

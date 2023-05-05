@@ -68,13 +68,14 @@ public class PlayerAttack : MonoBehaviour
         //Instantiate bullet/projectile
         var currentBullet =
             Instantiate(projectile, attackPoint.position, Quaternion.identity,
-                bulletContainer.transform); //store instantiated bullet in currentBullet
-        //Rotate bullet to shoot direction
+                bulletContainer.transform); //store instantiated bullet in curreentBullet
+        //Rotate bullet to shooot direction
         currentBullet.transform.forward = direction.normalized;
 
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>()
             .AddForce(direction.normalized * shootForce, ForceMode.Impulse);
+        //make sure bullet dont collide with player
         Physics.IgnoreCollision(currentBullet.GetComponent<Collider>(), GetComponent<Collider>());
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
         OnPlayerAttack.Raise();

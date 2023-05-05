@@ -16,10 +16,10 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     public bool playerInAttackRange;
     private NavMeshAgent _agent;
 
-
     private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
     private Transform _player;
+    private bool isQuitting;
 
     private void Awake()
     {
@@ -45,8 +45,18 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
 
     private void OnDestroy()
     {
+        if (isQuitting)
+        {
+            return;
+        }
+
         OnEnemyDeath.Raise(ExperienceOnDeath);
         DestroyEnemy();
+    }
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
 
 
