@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public GameEvent OnPauseToggle;
+    public GameEvent OnInteract;
     [Header("Mouse Cursor Settings")] private readonly bool cursorLocked = true;
 
     // Input actions
@@ -57,12 +58,9 @@ public class InputManager : MonoBehaviour
 
         //toggle pause
         playerControls.Player.TogglePause.performed += TogglePauseOnperformed;
+        playerControls.Player.Interact.performed += InteractOnPerformed;
     }
 
-
-    private void Update()
-    {
-    }
 
     private void OnEnable()
     {
@@ -79,10 +77,14 @@ public class InputManager : MonoBehaviour
         SetCursorState(cursorLocked);
     }
 
+    private void InteractOnPerformed(InputAction.CallbackContext obj)
+    {
+        OnInteract.Raise();
+    }
+
     private void TogglePauseOnperformed(InputAction.CallbackContext obj)
     {
         OnPauseToggle.Raise();
-        Debug.Log("paused");
     }
 
     private void SetCursorState(bool newState)

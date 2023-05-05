@@ -1565,7 +1565,6 @@ GameObject:
   - component: {fileID: 5907086583810796883}
   - component: {fileID: 511724977607243561}
   - component: {fileID: 6228643821912734121}
-  - component: {fileID: 6228643821912734116}
   - component: {fileID: 6228643821912734118}
   - component: {fileID: 6228643821912734119}
   - component: {fileID: 6228643821912734120}
@@ -1637,18 +1636,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.01, z: 0}
---- !u!114 &6228643821912734116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6535285321925720041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5736d122c6e69004fafa87fe9e92297e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6228643821912734118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1661,8 +1648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d66b59c7f205f84b8e3ee998773a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
-  SprintSpeed: 20
+  MoveSpeed: 8
+  SprintSpeed: 15
   RotationSpeed: 50
   SpeedChangeRate: 100
   airResistance: 0.9
@@ -1679,7 +1666,7 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 6228643823289649051}
   TopClamp: 85
   BottomClamp: -85
-  OnPlayerJump: {fileID: 0}
+  OnPlayerJump: {fileID: 11400000, guid: 1b220791cb424b445bcad28ba5a1e1a1, type: 2}
 --- !u!114 &6228643821912734119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,7 +1679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4656323e053e86740a823c753023516d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPauseToggle: {fileID: 0}
+  OnPauseToggle: {fileID: 11400000, guid: 4bd6dac260d25054b8b36217ba6bc4c9, type: 2}
+  OnInteract: {fileID: 11400000, guid: 105586c0790dc424d89bc50cea9cc33d, type: 2}
 --- !u!114 &6228643821912734120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,17 +1796,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6c25b687291ae41b1c41cdc7121dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
+  bulletContainer: {fileID: 0}
   projectile: {fileID: 6755837675473529000, guid: e61a2d601a448574e927d978570989d9,
     type: 3}
   shootForce: 100
   upwardForce: 1
-  timeBetweenShooting: 0.5
-  timeBetweenShots: 0.5
+  timeBetweenShooting: 0.75
   fpsCam: {fileID: 1116783324460215727}
   attackPoint: {fileID: 6228643821798974024}
   allowInvoke: 1
-  OnPlayerAttack: {fileID: 0}
+  OnPlayerAttack: {fileID: 11400000, guid: c5c5e68ab75ddef438f6507db2bf6d06, type: 2}
 --- !u!114 &8969995068271032652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3274,17 +3261,17 @@ PrefabInstance:
     - target: {fileID: 4356163662667029411, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.114872
+      value: -21.094952
       objectReference: {fileID: 0}
     - target: {fileID: 4356163662667029411, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.2721412
+      value: 2.7378945
       objectReference: {fileID: 0}
     - target: {fileID: 4356163662667029411, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.423405
+      value: -46.730984
       objectReference: {fileID: 0}
     - target: {fileID: 4356163662667029411, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
@@ -3309,17 +3296,17 @@ PrefabInstance:
     - target: {fileID: 6104945748243045336, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.114872
+      value: -21.094952
       objectReference: {fileID: 0}
     - target: {fileID: 6104945748243045336, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.2721412
+      value: 2.7378945
       objectReference: {fileID: 0}
     - target: {fileID: 6104945748243045336, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.423405
+      value: -46.730984
       objectReference: {fileID: 0}
     - target: {fileID: 6104945748243045336, guid: 2672635e08ff58c4aa7a5eb44b331d75,
         type: 3}
@@ -3379,10 +3366,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0.98, y: 0.46, z: -1.62}
+  ShoulderOffset: {x: 0.98, y: -0.32, z: -1.62}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 4
+  CameraDistance: 3.55
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0

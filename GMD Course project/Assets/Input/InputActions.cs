@@ -98,6 +98,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a6d5faf-f3bf-4345-8d78-43bdaaaabfb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -417,6 +426,28 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""TogglePause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea8a8906-48c5-48f5-839e-84a93eb6f90a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c92666b-eac1-4330-994b-f5a0b64c291f"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1012,6 +1043,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_TogglePause = m_Player.FindAction("TogglePause", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1091,6 +1123,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_TogglePause;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -1103,6 +1136,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @TogglePause => m_Wrapper.m_Player_TogglePause;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1136,6 +1170,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @TogglePause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePause;
                 @TogglePause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePause;
                 @TogglePause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePause;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1164,6 +1201,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @TogglePause.started += instance.OnTogglePause;
                 @TogglePause.performed += instance.OnTogglePause;
                 @TogglePause.canceled += instance.OnTogglePause;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -1328,6 +1368,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnTogglePause(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
