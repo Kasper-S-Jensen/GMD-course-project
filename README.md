@@ -28,7 +28,7 @@ https://quaternius.com
 
 ## Assets
 ### Charactor Controller
-https://assetstore.unity.com/packages/essentials/starter-assets-third-person-character-controller-196526
+https://assetstore.unity.com/packages/essentials/starter-assets-first-person-character-controller-urp-196525
 
 
 ### Particles
