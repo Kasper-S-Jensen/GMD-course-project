@@ -21,15 +21,15 @@ public class SoundManager : MonoBehaviour
 
         //create list of audioinfos
         clipDictionary = new Dictionary<string, AudioClip>();
-        foreach (var info in audioClips)
+        foreach (var clip in audioClips)
         {
-            if (clipDictionary.ContainsKey(info.clipName))
+            if (clipDictionary.ContainsKey(clip.clipName))
             {
-                Debug.LogWarning($"Duplicated clip name: {info.clipName}");
+                Debug.LogWarning($"Duplicated clip name: {clip.clipName}");
             }
             else
             {
-                clipDictionary.Add(info.clipName, info.clip);
+                clipDictionary.Add(clip.clipName, clip.clip);
             }
         }
 
@@ -60,7 +60,6 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"Audio clip '{clipName}' not found.");
             return;
         }
-
 
         // Find an available AudioSource to play the clipp
         foreach (var source in audioSources)

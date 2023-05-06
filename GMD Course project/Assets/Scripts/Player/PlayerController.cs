@@ -6,7 +6,7 @@ namespace StarterAssets
     public class PlayerController : MonoBehaviour
     {
         private const float Threshold = 0.01f;
-        private static readonly int Speed = Animator.StringToHash("Speed");
+
 
         [Header("Player")] [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 4.0f;
@@ -62,7 +62,7 @@ namespace StarterAssets
         public GameEvent OnPlayerJump;
 
         private readonly float _terminalVelocity = 53.0f;
-        private Animator _animator;
+
 
         // cinemachine
         private float _cinemachineTargetPitch;
@@ -89,7 +89,6 @@ namespace StarterAssets
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -111,7 +110,6 @@ namespace StarterAssets
 
         private void Update()
         {
-            Animate();
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -140,11 +138,6 @@ namespace StarterAssets
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
                 GroundedRadius);
-        }
-
-        private void Animate()
-        {
-            _animator.SetFloat(Speed, _controller.velocity.magnitude);
         }
 
 

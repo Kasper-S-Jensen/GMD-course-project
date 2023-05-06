@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class HunterEnemyAI : MonoBehaviour, IEnemyAI
 {
-    private static readonly int Speed = Animator.StringToHash("Speed");
-    private static readonly int Attack = Animator.StringToHash("Attack");
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
     public LayerMask whatIsPlayer;
@@ -15,8 +13,8 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     public float sightRange, attackRange;
     public bool playerInAttackRange;
     private NavMeshAgent _agent;
+    private AnimationController _animationController;
 
-    private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
     private Transform _player;
     private bool isQuitting;
@@ -26,7 +24,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
         _enemyAttackPlayer = GetComponent<IEnemyAttackPlayer>();
         _player = GameObject.FindWithTag("Player").transform;
         _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        _animationController = GetComponent<AnimationController>();
     }
 
     // Start is called before the first frame update
@@ -38,8 +36,6 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
     // Update is called once per frame
     private void Update()
     {
-        Animate();
-
         CheckState();
     }
 
@@ -79,7 +75,7 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
 
         if (!playerInAttackRange)
         {
-            _animator.SetBool(Attack, false);
+            _animationController.AttackFalse();
             ChasePlayer();
         }
 
@@ -105,12 +101,6 @@ public class HunterEnemyAI : MonoBehaviour, IEnemyAI
         transform.LookAt(lookAtTarget);
 
         _enemyAttackPlayer.AttackPlayer();
-    }
-
-
-    private void Animate()
-    {
-        _animator.SetFloat(Speed, _agent.velocity.magnitude);
     }
 
 

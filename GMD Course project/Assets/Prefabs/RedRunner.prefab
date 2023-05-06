@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 2854341398586873192}
   - component: {fileID: 4745728500307110944}
   - component: {fileID: 441641240451539471}
+  - component: {fileID: 7804036472192989140}
   m_Layer: 10
   m_Name: RedRunner
   m_TagString: Enemy
@@ -1121,6 +1122,18 @@ MonoBehaviour:
   projectile: {fileID: 5644850614687075804, guid: b735e3d48e0aab44fb4c7938a98462e8,
     type: 3}
   barrelEnd: {fileID: 423656790}
+--- !u!114 &7804036472192989140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3124866682291687956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105285595fb317f46bf2472170517210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3484893901057679310
 GameObject:
   m_ObjectHideFlags: 0

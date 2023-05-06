@@ -10,8 +10,6 @@ public class WaveSpawner : MonoBehaviour
     public GameObject spawnPoint;
 
     public GameEvent OnEnemySpawned;
-    public GameEvent OnNewWave;
-    public GameEvent OnWaveCompleted;
     private bool readyToCountDown;
     public int currentWaveIndex { get; set; }
 

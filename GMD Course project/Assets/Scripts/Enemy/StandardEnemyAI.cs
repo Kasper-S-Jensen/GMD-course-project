@@ -14,7 +14,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
     private NavMeshAgent _agent;
-    private Animator _animator;
     private IEnemyAttackPlayer _enemyAttackPlayer;
 
     private Transform _player, _theGate;
@@ -27,7 +26,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         _player = GameObject.FindWithTag("Player").transform;
         _theGate = GameObject.FindWithTag("TheGate").transform;
         _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
     }
 
 
@@ -38,7 +36,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
 
     private void Update()
     {
-        Animate();
         CheckState();
     }
 
@@ -67,9 +64,7 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         Gizmos.DrawWireSphere(position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(position, sightRange);
-    }
-
-
+    } // ReSharper disable Unity.PerformanceAnalysis
     public void CheckState()
     {
         var position = transform.position;
@@ -142,12 +137,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         transform.LookAt(lookAtTarget);
 
         _enemyAttackPlayer.AttackPlayer();
-    }
-
-
-    private void Animate()
-    {
-        _animator.SetFloat(Speed, _agent.velocity.magnitude);
     }
 
 
