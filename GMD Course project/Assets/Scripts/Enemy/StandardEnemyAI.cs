@@ -64,9 +64,7 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         Gizmos.DrawWireSphere(position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(position, sightRange);
-    }
-
-
+    } // ReSharper disable Unity.PerformanceAnalysis
     public void CheckState()
     {
         var position = transform.position;
