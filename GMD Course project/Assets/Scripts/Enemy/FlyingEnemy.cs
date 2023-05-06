@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class FlyingEnemy : MonoBehaviour, IEnemyAI
 {
-    private static readonly int Attack = Animator.StringToHash("Attack");
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
     public LayerMask whatIsPlayer, whatIsGate;
@@ -14,13 +13,12 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
     public bool playerInSightRange, playerInAttackRange, gateInSightRange, gateInAttackRange;
 
     private NavMeshAgent _agent;
-    private Animator _animator;
+    private AnimationController _animationController;
     private IEnemyAttackPlayer _enemyAttackPlayer;
     private IEnemyAttackTheGate _enemyAttackTheGate;
 
     private Transform _player, _theGate;
     private float initialFlyingHeight;
-
     private bool isQuitting;
 
     private void Awake()
@@ -30,8 +28,8 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         _player = GameObject.FindWithTag("Player").transform;
         _theGate = GameObject.FindWithTag("TheGate").transform;
         _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
         _agent.autoTraverseOffMeshLink = false;
+        _animationController = GetComponent<AnimationController>();
     }
 
     private void Start()
@@ -120,20 +118,21 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         var lookAtTarget =
             new Vector3(theGateTransform.position.x, transform.position.y, theGateTransform.position.z);
         transform.LookAt(lookAtTarget);
-        _animator.SetBool(Attack, true);
+
+        _animationController.AttackTrue();
     }
 
 
     private void StormTheGate()
     {
-        _animator.SetBool(Attack, false);
+        _animationController.AttackFalse();
         FlyToDestination(_theGate.position);
     }
 
 
     private void ChasePlayer()
     {
-        _animator.SetBool(Attack, false);
+        _animationController.AttackFalse();
         FlyToDestination(_player.position);
     }
 
@@ -157,7 +156,7 @@ public class FlyingEnemy : MonoBehaviour, IEnemyAI
         MaintainFlyingHeight();
 
         transform.LookAt(_player);
-        _animator.SetBool(Attack, true);
+        _animationController.AttackTrue();
     }
 
     private void MaintainFlyingHeight()

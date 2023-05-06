@@ -2061,6 +2061,7 @@ GameObject:
   - component: {fileID: 8132910611033255257}
   - component: {fileID: 8132910611033255256}
   - component: {fileID: 8132910611033255258}
+  - component: {fileID: 5183455999258382452}
   m_Layer: 10
   m_Name: HunterFrog
   m_TagString: Enemy
@@ -2190,6 +2191,18 @@ MonoBehaviour:
   currentHealth: 0
   maximumHealth: 2
   OnGateDestroyed: {fileID: 11400000, guid: da65959179c8e424db1c47fe1cbc226b, type: 2}
+--- !u!114 &5183455999258382452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943179973812565963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105285595fb317f46bf2472170517210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9060919418079547736
 GameObject:
   m_ObjectHideFlags: 0
