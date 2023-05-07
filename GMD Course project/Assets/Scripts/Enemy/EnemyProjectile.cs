@@ -7,6 +7,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public LayerMask whatIsGate;
     public GameEvent OnGateDamage;
+    public GameEvent OnUpdateScore;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class EnemyProjectile : MonoBehaviour
             {
                 health.TakeDamage(projectileDamage);
                 OnGateDamage.Raise(projectileDamage);
+                OnUpdateScore.Raise((int) -projectileDamage * 2);
             }
         }
 

@@ -1061,8 +1061,6 @@ MonoBehaviour:
   whatIsGate:
     serializedVersion: 2
     m_Bits: 128
-  explosion: {fileID: 1335506079386504625, guid: e4c1e573542fc2446a5926b46d629850,
-    type: 3}
   sightRange: 20
   attackRange: 5
   playerInSightRange: 0
@@ -1106,6 +1104,8 @@ MonoBehaviour:
   currentHealth: 0
   maximumHealth: 2
   OnGateDestroyed: {fileID: 0}
+  explosion: {fileID: 1335506079386504625, guid: e4c1e573542fc2446a5926b46d629850,
+    type: 3}
 --- !u!114 &441641240451539471
 MonoBehaviour:
   m_ObjectHideFlags: 0

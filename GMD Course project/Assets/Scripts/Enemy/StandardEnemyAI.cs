@@ -8,7 +8,7 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
     public GameEvent OnEnemyDeath;
     public int ExperienceOnDeath = 100;
     public LayerMask whatIsPlayer, whatIsGate;
-    public GameObject explosion;
+
 
     //States
     public float sightRange, attackRange;
@@ -47,7 +47,6 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         }
 
         OnEnemyDeath.Raise(ExperienceOnDeath);
-        DestroyEnemy();
     }
 
     private void OnApplicationQuit()
@@ -137,15 +136,5 @@ public class StandardEnemyAI : MonoBehaviour, IEnemyAI
         transform.LookAt(lookAtTarget);
 
         _enemyAttackPlayer.AttackPlayer();
-    }
-
-
-    private void DestroyEnemy()
-    {
-        var o = gameObject.transform;
-        var explosionSpawnpoint = new Vector3(o.position.x, o.position.y + 1, o.position.z);
-        var explosionObj = Instantiate(explosion, explosionSpawnpoint, o.transform.rotation);
-        Destroy(explosionObj, 2f);
-        Destroy(gameObject);
     }
 }

@@ -132,3 +132,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   OnGateDamage: {fileID: 11400000, guid: eae998a8cd03f5345ba327882c143677, type: 2}
+  OnUpdateScore: {fileID: 11400000, guid: b6dd873785bf22d40a4f81308a14b8e0, type: 2}

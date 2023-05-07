@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI gateHealth;
     public TextMeshProUGUI playerHealth;
     public GameObject WaveCompletedAnnouncementObj;
     public GameObject GameWonAnnouncementObj;
+    public GameObject HUD;
     public TextMeshProUGUI enemiesLeftText;
 
     // public TextMeshProUGUI HealthBar;
@@ -62,6 +64,8 @@ public class UIController : MonoBehaviour
 
     public void GameWonAnnouncement(Component sender, object data)
     {
+        HUD.SetActive(false);
+        finalScoreText.SetText("Your final score is: " + _score + ". Think you can do better? Press 'Esc'");
         StartCoroutine(ActivateForSeconds(GameWonAnnouncementObj, 7));
     }
 
