@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour
     public float attackRange;
 
     public LayerMask whatIsEnemy;
-
+    public GameEvent OnUpdateScore;
     private Transform _player;
 
     private IEnemyAttackPlayer attack;
@@ -34,9 +34,10 @@ public class Turret : MonoBehaviour
     public void ActivateTurret(Component sender, object data)
     {
         var distance = Vector3.Distance(transform.position, _player.position);
-        if (distance < 4 && UIController._score > 1000)
+        if (distance < 4 && UIController._score >= 1000)
         {
             Gem.gameObject.SetActive(true);
+            OnUpdateScore.Raise(-1000);
             Debug.Log("TURRET ACTIVATED");
         }
     }

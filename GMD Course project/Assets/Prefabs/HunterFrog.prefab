@@ -2191,6 +2191,8 @@ MonoBehaviour:
   currentHealth: 0
   maximumHealth: 2
   OnGateDestroyed: {fileID: 11400000, guid: da65959179c8e424db1c47fe1cbc226b, type: 2}
+  explosion: {fileID: 1335506079386504625, guid: e4c1e573542fc2446a5926b46d629850,
+    type: 3}
 --- !u!114 &5183455999258382452
 MonoBehaviour:
   m_ObjectHideFlags: 0

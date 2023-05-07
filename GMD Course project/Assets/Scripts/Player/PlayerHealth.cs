@@ -5,7 +5,9 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     public float maximumHealth;
     public GameEvent OnPlayerDamaged;
+    public GameEvent OnPlayerHealed;
     public GameEvent OnPlayerDeath;
+    public GameEvent OnUpdateScore;
 
     private void Start()
     {
@@ -29,5 +31,19 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         OnPlayerDeath.Raise();
+    }
+
+    public void StartHealing(float healingAmount)
+    {
+        if (currentHealth < maximumHealth)
+        {
+            currentHealth += healingAmount;
+            OnPlayerHealed.Raise(currentHealth);
+            OnUpdateScore.Raise((int) -healingAmount * 10);
+        }
+    }
+
+    public void StopHealing()
+    {
     }
 }
