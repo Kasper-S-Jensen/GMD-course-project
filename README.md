@@ -23,7 +23,7 @@ https://www.mixamo.com
 
 ### Quaternius
 https://quaternius.com  
-*Various 3D modeuls, such as the gate, the trees and enemies*
+*Various 3D models, such as the gate, the trees and enemies*
 
 
 ## Assets
